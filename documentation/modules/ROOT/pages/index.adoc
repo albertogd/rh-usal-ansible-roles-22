@@ -1,27 +1,33 @@
-= Deploying container applications with Podman
+= Creating Ansible Roles
 
 [.text-center.strong]
 == Introduction
 
-Deploying container applications with Podman is the first of part of **Autoscaling serverless applications in Openshift** workshop to get familiar with container and autoscaling serverless applications in Openshift. You'll start creating a MySQL container. Then, you'll add Persistent Storage and local listen. Finally, you'll create an Apache container to serve a index.html.
+Roles let you automatically load related vars, files, tasks, handlers, and other Ansible artifacts based on a known file structure. After you group your content in roles, you can easily reuse them and share them with other users.
 
 [.tiles.browse]
 == Exercises
 
-=== 1. Run a MySQL container
+=== 1. Create an Ansible Role to deploy a MySQL database
 
-Create and run a MySQL container in the background.
+Create an asnible role to deploy MYSQL server and create a database.
 
-xref:02-basic-container.adoc[Start]
+xref:02-role-mysql.adoc[Start]
 
-=== 2. Run a MySQL container with Persistent Storage
+=== 2. Create an Ansible Role to deploy a Web Server
 
-Run a MySQL container in the background, using persistent storage and listening on port 30306.
+Create an asnible role to deploy two web servers, which returns some content stored in the databsase.
 
-xref:03-container-storage.adoc[Start]
+xref:03-role-httpd.adoc[Start]
 
-=== 3. Create your own HTTP container image with a Dockerfile
+=== 3. Create an Ansible Role to deploy a HAProxy Load Balancer
 
-Create your own HTTP image using a Dockerfile. After that, you’ll start a new container in the background serving some custom php files. 
+Create an asnible role to deploy an HAProxy to load balance the requests to the web server.
 
-xref:04-dockerfile.adoc[Start]
+xref:04-role-haproxy.adoc[Start]
+
+=== 4. Create a playbook to deploy the whole solution
+
+Create a playbook to use the MySQL, Web Server and HAProxy roles.
+
+xref:05-role-solution.adoc[Start]

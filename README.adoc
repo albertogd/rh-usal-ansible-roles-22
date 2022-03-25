@@ -7,9 +7,17 @@ Roles let you automatically load related vars, files, tasks, handlers, and other
 
 ## Exercises
 
-### 1.  Create an Ansible Role
-Create an asnible role to deploy a database and a web server, which returns some content stored in the databsase.
+### 1.  Create an Ansible Role to deploy a MySQL database
+Create an asnible role to deploy MYSQL server and create a database.
 
+### 2.  Create an Ansible Role to deploy a Web Server
+Create an asnible role to deploy two web servers, which returns some content stored in the databsase.
+
+### 3.  Create an Ansible Role to deploy a HAProxy Load Balancer
+Create an asnible role to deploy an HAProxy to load balance the requests to the web server.
+
+### 4.  Create a playbook to deploy the whole solution
+Create a playbook to use the MySQL, Web Server and HAProxy roles.
 
 ## Author Information
 
