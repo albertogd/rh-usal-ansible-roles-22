@@ -30,4 +30,4 @@ xref:04-role-haproxy.adoc[Start]
 
 Create a playbook to use the MySQL, Web Server and HAProxy roles.
 
-xref:05-role-solution.adoc[Start]
+xref:05-role-playbook.adoc[Start]
