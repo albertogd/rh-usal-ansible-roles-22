@@ -1,14 +1,14 @@
 * xref:01-setup.adoc[1. Setup]
 ** xref:01-setup.adoc#prerequisite[Prerequisites]
 
-* xref:02-role-mysql.adoc[1. Create an Ansible Role to deploy a MySQL database]
+* xref:02-role-mysql.adoc[2. Create an Ansible Role to deploy a MySQL database]
 ** xref:02-role-mysql.adoc#search[K]
 
-* xref:03-role-httpd.adoc[2. Create an Ansible Role to deploy a Web Server]
+* xref:03-role-httpd.adoc[3. Create an Ansible Role to deploy a Web Server]
 ** xref:03-role-httpd.adoc#database[K]
 
-* xref:04-role-haproxy.adoc[3. Create an Ansible Role to deploy a HAProxy Load Balancer]
+* xref:04-role-haproxy.adoc[4. Create an Ansible Role to deploy a HAProxy Load Balancer]
 ** xref:04-role-haproxy.adoc#dockferfile[Ke]
 
-* xref:05-role-playbook.adoc[3. Create an Ansible Role to deploy a HAProxy Load Balancer]
+* xref:05-role-playbook.adoc[5. Create an Ansible Role to deploy a HAProxy Load Balancer]
 ** xref:05-role-playbook.adoc#dockferfile[K]
