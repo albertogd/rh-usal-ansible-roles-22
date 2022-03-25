@@ -3,9 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Creating Ansible Roles :: Creating Ansible Roles</title>
-    <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/index.html">
-    <link rel="next" href="01-setup.html">
+    <title>Deploying a MySQL ansible role :: Creating Ansible Roles</title>
+    <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/02-role-mysql.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
 <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
@@ -124,69 +123,57 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link is-current"></a>
+  <a href="index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Creating Ansible Roles</a></li>
+    <li><a href="02-role-mysql.html">Deploying a MySQL ansible role</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/albertogd/rh-usal-ansible-roles-22/edit/master/documentation/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/albertogd/rh-usal-ansible-roles-22/edit/master/documentation/modules/ROOT/pages/02-role-mysql.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Creating Ansible Roles</h1>
-<div class="sect1 text-center strong">
-<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>Introduction</h2>
+<h1 class="page">Deploying a MySQL ansible role</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Roles let you automatically load related vars, files, tasks, handlers, and other Ansible artifacts based on a known file structure. After you group your content in roles, you can easily reuse them and share them with other users.</p>
+<p>In this exercise, you will create a role to deploy MySQL.</p>
 </div>
 </div>
 </div>
-<div class="sect1 tiles browse">
-<h2 id="_exercises"><a class="anchor" href="#_exercises"></a>Exercises</h2>
+<div class="sect1">
+<h2 id="search"><a class="anchor" href="#search"></a>Create ansible role skeleton</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_1_create_an_ansible_role_to_deploy_a_mysql_database"><a class="anchor" href="#_1_create_an_ansible_role_to_deploy_a_mysql_database"></a>1. Create an Ansible Role to deploy a MySQL database</h3>
 <div class="paragraph">
-<p>Create an asnible role to deploy MYSQL server and create a database.</p>
+<p><strong>1) Create an empty ansible role</strong></p>
 </div>
 <div class="paragraph">
-<p><a href="02-role-mysql.html" class="xref page">Start</a></p>
+<p>Run <strong>ansible-galaxy role init</strong> to create an empty role skeleton:</p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init mysql</code></pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_2_create_an_ansible_role_to_deploy_a_web_server"><a class="anchor" href="#_2_create_an_ansible_role_to_deploy_a_web_server"></a>2. Create an Ansible Role to deploy a Web Server</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pull"><a class="anchor" href="#pull"></a>Add tasks to deploy MySQL</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Create an asnible role to deploy two web servers, which returns some content stored in the databsase.</p>
-</div>
-<div class="paragraph">
-<p><a href="03-role-httpd.html" class="xref page">Start</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_3_create_an_ansible_role_to_deploy_a_haproxy_load_balancer"><a class="anchor" href="#_3_create_an_ansible_role_to_deploy_a_haproxy_load_balancer"></a>3. Create an Ansible Role to deploy a HAProxy Load Balancer</h3>
-<div class="paragraph">
-<p>Create an asnible role to deploy an HAProxy to load balance the requests to the web server.</p>
+<p><strong>2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?</strong></p>
 </div>
 <div class="paragraph">
-<p><a href="04-role-haproxy.html" class="xref page">Start</a></p>
+<p>Pull the image with the command:</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_4_create_a_playbook_to_deploy_the_whole_solution"><a class="anchor" href="#_4_create_a_playbook_to_deploy_the_whole_solution"></a>4. Create a playbook to deploy the whole solution</h3>
-<div class="paragraph">
-<p>Create a playbook to use the MySQL, Web Server and HAProxy roles.</p>
-</div>
-<div class="paragraph">
-<p><a href="#05-role-solution.adoc" class="xref unresolved">Start</a></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7</code></pre>
 </div>
 </div>
 </div>
 </div>
-<nav class="pagination">
-  <span class="next"><a href="01-setup.html">1. Setup</a></span>
-</nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
