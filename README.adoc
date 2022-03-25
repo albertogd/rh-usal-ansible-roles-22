@@ -1,1 +1,18 @@
-Check the build courseware https://redhat-scholars.github.io/build-course[documentation]  on how folder structure, how to use macros and other gotchas
+# Creating Ansible Roles
+
+https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html[Start **Creating Ansible Roles**]
+
+## Roles
+Roles let you automatically load related vars, files, tasks, handlers, and other Ansible artifacts based on a known file structure. After you group your content in roles, you can easily reuse them and share them with other users.
+
+## Exercises
+
+### 1.  Create an Ansible Role
+Create an asnible role to deploy a database and a web server, which returns some content stored in the databsase.
+
+
+## Author Information
+
+Alberto Gonzalez de Dios @Red Hat
+
+algonzal@redhat.com
