@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Deploy Service :: Creating Ansible Roles</title>
-    <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/02-deploy.html">
+    <title>Deploying a MySQL ansible role :: Creating Ansible Roles</title>
+    <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/01-role-mysql.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
 <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
@@ -115,88 +115,50 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Creating Ansible Roles</a></li>
-    <li><a href="02-deploy.html">Deploy Service</a></li>
+    <li><a href="01-role-mysql.html">Deploying a MySQL ansible role</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/albertogd/rh-usal-ansible-roles-22/edit/master/documentation/modules/ROOT/pages/02-deploy.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/albertogd/rh-usal-ansible-roles-22/edit/master/documentation/modules/ROOT/pages/01-role-mysql.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Deploy Service</h1>
-<div class="sect1">
-<h2 id="service"><a class="anchor" href="#service"></a>The Service</h2>
+<h1 class="page">Deploying a MySQL ansible role</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The code:</p>
+<p>In this exercise, you will create a role to deploy MySQL.</p>
 </div>
-<div class="listingblock lines_7 console-input">
+</div>
+</div>
+<div class="sect1">
+<h2 id="search"><a class="anchor" href="#search"></a>Create ansible role skeleton</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>1) Create an empty ansible role</strong></p>
+</div>
+<div class="paragraph">
+<p>Run <strong>ansible-galaxy role init</strong> to create an empty role skeleton:</p>
+</div>
+<div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Main {
-
-    public static void main(String[] args) {
-
-    }
-
-}
-
-./mvnw compile</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init mysql</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="package"><a class="anchor" href="#package"></a>Packaging the Service</h2>
+<h2 id="pull"><a class="anchor" href="#pull"></a>Add tasks to deploy MySQL</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can package the next bash script:</p>
+<p><strong>2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?</strong></p>
+</div>
+<div class="paragraph">
+<p>Pull the image with the command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">#!/bin/sh
-echo "Hello World"</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7</code></pre>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="deploy"><a class="anchor" href="#deploy"></a>Deploy the Service</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>And then you can deploy the service and execute commands inside:</p>
-</div>
-<div class="paragraph">
-<p>Check that the pod is up and running:</p>
-</div>
-<div class="listingblock lines_space console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get pods</code></pre>
-</div>
-</div>
-<div class="listingblock console-output">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                        READY   STATUS    RESTARTS   AGE
-apps   1/1     Running   0          5s</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then let&#8217;s go into the running pod to execute some commands:</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl exec -ti apps /bin/bash</code></pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Change the pod name with your pod name.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>

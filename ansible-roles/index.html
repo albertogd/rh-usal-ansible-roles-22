@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Creating Ansible Roles :: Creating Ansible Roles</title>
+    <title>Creating an Ansible Collection with 3 Roles :: Creating Ansible Roles</title>
     <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/index.html">
     <link rel="next" href="01-setup.html">
     <meta name="generator" content="Antora 3.0.0">
@@ -51,37 +51,37 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="02-role-mysql.html">2. Create an Ansible Role to deploy a MySQL database</a>
+    <a class="nav-link" href="#02-role-mysql.adoc">2. Create an Ansible Role to deploy a MySQL database</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-role-mysql.html#search">K</a>
+    <a class="nav-link" href="#02-role-mysql.adoc#search">K</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="03-role-httpd.html">3. Create an Ansible Role to deploy a Web Server</a>
+    <a class="nav-link" href="#03-role-httpd.adoc">3. Create an Ansible Role to deploy a Web Server</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-role-httpd.html#database">K</a>
+    <a class="nav-link" href="#03-role-httpd.adoc#database">K</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="04-role-haproxy.html">4. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
+    <a class="nav-link" href="#04-role-haproxy.adoc">4. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-role-haproxy.html#dockferfile">Ke</a>
+    <a class="nav-link" href="#04-role-haproxy.adoc#dockferfile">Ke</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="05-role-playbook.html">5. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
+    <a class="nav-link" href="#05-role-playbook.adoc">5. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-role-playbook.html#dockferfile">K</a>
+    <a class="nav-link" href="#05-role-playbook.adoc#dockferfile">K</a>
   </li>
 </ul>
   </li>
@@ -116,58 +116,174 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Creating Ansible Roles</a></li>
+    <li><a href="index.html">Creating an Ansible Collection with 3 Roles</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/albertogd/rh-usal-ansible-roles-22/edit/master/documentation/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Creating Ansible Roles</h1>
+<h1 class="page">Creating an Ansible Collection with 3 Roles</h1>
 <div class="sect1 text-center strong">
 <h2 id="_introduction"><a class="anchor" href="#_introduction"></a>Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>Collections are a distribution format for Ansible content that can include playbooks, roles, modules, and plugins.</p>
+</div>
+<div class="paragraph">
 <p>Roles let you automatically load related vars, files, tasks, handlers, and other Ansible artifacts based on a known file structure. After you group your content in roles, you can easily reuse them and share them with other users.</p>
+</div>
+<div class="sect2">
+<h3 id="_creating_collections"><a class="anchor" href="#_creating_collections"></a>Creating collections</h3>
+<div class="paragraph">
+<p>To create a collection:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a collection skeleton with the collection init command.</p>
+</li>
+<li>
+<p>Add modules and other content to the collection.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy collection init my_namespace.my_collection</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_collection_directories_and_files"><a class="anchor" href="#_collection_directories_and_files"></a>Collection directories and files</h4>
+<div class="paragraph">
+<p>A collection can contain these directories and files:</p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">collection/
+├── docs/
+├── galaxy.yml
+├── meta/
+│   └── runtime.yml
+├── plugins/
+│   ├── modules/
+│   │   └── module1.py
+│   ├── inventory/
+│   └── .../
+├── README.md
+├── roles/
+│   ├── role1/
+│   ├── role2/
+│   └── .../
+├── playbooks/
+│   ├── files/
+│   ├── vars/
+│   ├── templates/
+│   └── tasks/
+└── tests/</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_roles"><a class="anchor" href="#_creating_roles"></a>Creating roles</h3>
+<div class="paragraph">
+<p>Use the init command to initialize the base structure of a new role:</p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init role_name</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_role_directories_and_files"><a class="anchor" href="#_role_directories_and_files"></a>Role directories and files</h4>
+<div class="paragraph">
+<p>A role can contain these directories and files:</p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">role_name/
+    README.md
+    .travis.yml
+    defaults/
+        main.yml
+    files/
+    handlers/
+        main.yml
+    meta/
+        main.yml
+    templates/
+    tests/
+        inventory
+        test.yml
+    vars/
+        main.yml</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1 tiles browse">
 <h2 id="_exercises"><a class="anchor" href="#_exercises"></a>Exercises</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>In this exercise you&#8217;ll create an ansible collection with 3 roles to deploy a Web solution. This solution consists of:
+- 1 HAProxy
+- 2 HTTPD servers
+- 1 MySQL database</p>
+</div>
+<div class="paragraph">
+<p>The roles must deploy this solution, using one index.php which displays the content of the database.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/Red_Hat_Academy_USAL_Collections_and_Roles.png" alt="Red Hat Academy USAL Collections and Roles">
+</div>
+</div>
 <div class="sect2">
 <h3 id="_1_create_an_ansible_role_to_deploy_a_mysql_database"><a class="anchor" href="#_1_create_an_ansible_role_to_deploy_a_mysql_database"></a>1. Create an Ansible Role to deploy a MySQL database</h3>
 <div class="paragraph">
-<p>Create an asnible role to deploy MYSQL server and create a database.</p>
+<p>Create an asnible role named <strong>mysql</strong> to deploy MYSQL server and create a database.</p>
 </div>
 <div class="paragraph">
-<p><a href="02-role-mysql.html" class="xref page">Start</a></p>
+<p><a href="01-role-mysql.html" class="xref page">Start</a></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_2_create_an_ansible_role_to_deploy_a_web_server"><a class="anchor" href="#_2_create_an_ansible_role_to_deploy_a_web_server"></a>2. Create an Ansible Role to deploy a Web Server</h3>
 <div class="paragraph">
-<p>Create an asnible role to deploy two web servers, which returns some content stored in the databsase.</p>
+<p>Create an asnible role named <strong>httpd</strong>  to deploy two web servers, which returns some content stored in the databsase.</p>
 </div>
 <div class="paragraph">
-<p><a href="03-role-httpd.html" class="xref page">Start</a></p>
+<p><a href="02-role-httpd.html" class="xref page">Start</a></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_3_create_an_ansible_role_to_deploy_a_haproxy_load_balancer"><a class="anchor" href="#_3_create_an_ansible_role_to_deploy_a_haproxy_load_balancer"></a>3. Create an Ansible Role to deploy a HAProxy Load Balancer</h3>
 <div class="paragraph">
-<p>Create an asnible role to deploy an HAProxy to load balance the requests to the web server.</p>
+<p>Create an asnible role named <strong>haproxy</strong> to deploy an HAProxy to load balance the requests to the web server.</p>
 </div>
 <div class="paragraph">
-<p><a href="04-role-haproxy.html" class="xref page">Start</a></p>
+<p><a href="03-role-haproxy.html" class="xref page">Start</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_4_create_a_playbook_to_deploy_the_whole_solution"><a class="anchor" href="#_4_create_a_playbook_to_deploy_the_whole_solution"></a>4. Create a playbook to deploy the whole solution</h3>
+<h3 id="_4_create_a_collection_to_deploy"><a class="anchor" href="#_4_create_a_collection_to_deploy"></a>4. Create a Collection to deploy</h3>
 <div class="paragraph">
-<p>Create a playbook to use the MySQL, Web Server and HAProxy roles.</p>
+<p>Create an ansible collection named <strong>usal.web</strong> and add the 3 roles. Publish it to a new github repo.</p>
 </div>
 <div class="paragraph">
-<p><a href="05-role-playbook.html" class="xref page">Start</a></p>
+<p><a href="04-collection-web.html" class="xref page">Start</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_create_a_playbook_to_deploy_a_web_solution_using_the_role_created"><a class="anchor" href="#_5_create_a_playbook_to_deploy_a_web_solution_using_the_role_created"></a>5. Create a playbook to deploy a web solution using the role created</h3>
+<div class="paragraph">
+<p>Create a playbook to use <strong>usal.web</strong> roles using the collection you&#8217;ve just uploaded to your github repository.</p>
+</div>
+<div class="paragraph">
+<p><a href="05-playbook.html" class="xref page">Start</a></p>
 </div>
 </div>
 </div>
