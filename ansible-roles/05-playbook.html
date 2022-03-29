@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Create your own HTTP container image with a Dockerfile :: Creating Ansible Roles</title>
+    <title>Create an ansible playbook to deploy the Web solution :: Creating Ansible Roles</title>
     <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/05-playbook.html">
-    <link rel="prev" href="04-collection-web.html#dockferfile">
+    <link rel="prev" href="04-collection-web.html#init">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
 <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
@@ -57,7 +57,10 @@
     <a class="nav-link" href="01-role-mysql.html">1. Create an Ansible Role to deploy a MySQL database</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-role-mysql.html#search">K</a>
+    <a class="nav-link" href="01-role-mysql.html#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-role-mysql.html#yum">Install mysqld</a>
   </li>
 </ul>
   </li>
@@ -66,7 +69,16 @@
     <a class="nav-link" href="02-role-httpd.html">2. Create an Ansible Role to deploy a Web Server</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-role-httpd.html#database">K</a>
+    <a class="nav-link" href="02-role-httpd.html#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-role-httpd.html#yum">Install httpd</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-role-httpd.html#selinux">Allow httpd connections to MySQL database</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-role-httpd.html#service">Start and enable httpd service</a>
   </li>
 </ul>
   </li>
@@ -75,7 +87,16 @@
     <a class="nav-link" href="03-role-haproxy.html">3. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-role-haproxy.html#dockferfile">Ke</a>
+    <a class="nav-link" href="03-role-haproxy.html#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-haproxy.html#yum">Install HAProxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-haproxy.html#conf">Configure HAProxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-haproxy.html#service">Enable and start HAProxy</a>
   </li>
 </ul>
   </li>
@@ -84,13 +105,16 @@
     <a class="nav-link" href="#04-collection.adoc">4. Create a Collection to deploy the Web Solution</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-collection-web.html#dockferfile">K</a>
+    <a class="nav-link" href="04-collection-web.html#init">Create ansible collection skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-collection-web.html#init">Copy the roles to the collection</a>
   </li>
 </ul>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="05-playbook.html">5. Create a playbook to deploy the Web Solution using the role created</a>
+    <a class="nav-link" href="05-playbook.html">5. Create a playbook to deploy the Web solution using the collection created</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#dockferfile">K</a>
@@ -128,55 +152,80 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Creating Ansible Roles</a></li>
-    <li><a href="05-playbook.html">5. Create a playbook to deploy the Web Solution using the role created</a></li>
+    <li><a href="05-playbook.html">5. Create a playbook to deploy the Web solution using the collection created</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/albertogd/rh-usal-ansible-roles-22/edit/master/documentation/modules/ROOT/pages/05-playbook.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Create your own HTTP container image with a Dockerfile</h1>
+<h1 class="page">Create an ansible playbook to deploy the Web solution</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Create a playbook to use the MySQL, Web Server and HAProxy roles.</p>
+<p>Create a playbook to deploy MySQL, Web Server and HAProxy roles using the Web collection.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="search"><a class="anchor" href="#search"></a>Create ansible role skeleton</h2>
+<h2 id="mysql"><a class="anchor" href="#mysql"></a>Create an ansible playbook to deploy mysql</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>1) Create an empty ansible role</strong></p>
+<p><strong>1) Create a playbook to deploy mysql</strong></p>
 </div>
 <div class="paragraph">
-<p>Run <strong>ansible-galaxy role init</strong> to create an empty role skeleton:</p>
+<p>Create a playbook to deploy mysql. Target the hosts to mysql database.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="httpd"><a class="anchor" href="#httpd"></a>Create an ansible playbook to deploy httpd</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>1) Create a playbook to deploy httpd</strong></p>
+</div>
+<div class="paragraph">
+<p>Create a playbook to deploy httpd. Target the hosts to httpd servers.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="haproxy"><a class="anchor" href="#haproxy"></a>Create an ansible playbook to deploy haproxy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>1) Create a playbook to deploy haproxy </strong></p>
+</div>
+<div class="paragraph">
+<p>Create a playbook to deploy haproxy. Target the host to haproxy server.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="web"><a class="anchor" href="#web"></a>Create an ansible playbook to deploy web solution</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>1) Create a playbook to include the 3 playbooks</strong></p>
+</div>
+<div class="paragraph">
+<p>Create a playbook to include the 3 playbooks.</p>
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init mysql</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="pull"><a class="anchor" href="#pull"></a>Add tasks to deploy MySQL</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?</strong></p>
-</div>
-<div class="paragraph">
-<p>Pull the image with the command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">---
+- name: Deploy MySQL
+  import_playbook: deploy_mysql.yml
+
+- name: Deploy Web Servers
+  import_playbook: deploy_webservers.yml
+
+- name: Deploy HAProxy
+  import_playbook: deploy_haproxy.yml</code></pre>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="04-collection-web.html#dockferfile">K</a></span>
+  <span class="prev"><a href="04-collection-web.html#init">Create ansible collection skeleton</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

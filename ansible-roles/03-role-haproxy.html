@@ -58,7 +58,10 @@
     <a class="nav-link" href="01-role-mysql.html">1. Create an Ansible Role to deploy a MySQL database</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-role-mysql.html#search">K</a>
+    <a class="nav-link" href="01-role-mysql.html#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-role-mysql.html#yum">Install mysqld</a>
   </li>
 </ul>
   </li>
@@ -67,7 +70,16 @@
     <a class="nav-link" href="02-role-httpd.html">2. Create an Ansible Role to deploy a Web Server</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-role-httpd.html#database">K</a>
+    <a class="nav-link" href="02-role-httpd.html#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-role-httpd.html#yum">Install httpd</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-role-httpd.html#selinux">Allow httpd connections to MySQL database</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-role-httpd.html#service">Start and enable httpd service</a>
   </li>
 </ul>
   </li>
@@ -76,7 +88,16 @@
     <a class="nav-link" href="03-role-haproxy.html">3. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#dockferfile">Ke</a>
+    <a class="nav-link" href="#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#yum">Install HAProxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#conf">Configure HAProxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#service">Enable and start HAProxy</a>
   </li>
 </ul>
   </li>
@@ -85,13 +106,16 @@
     <a class="nav-link" href="#04-collection.adoc">4. Create a Collection to deploy the Web Solution</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-collection-web.html#dockferfile">K</a>
+    <a class="nav-link" href="04-collection-web.html#init">Create ansible collection skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-collection-web.html#init">Copy the roles to the collection</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="05-playbook.html">5. Create a playbook to deploy the Web Solution using the role created</a>
+    <a class="nav-link" href="05-playbook.html">5. Create a playbook to deploy the Web solution using the collection created</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="05-playbook.html#dockferfile">K</a>
@@ -145,7 +169,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="search"><a class="anchor" href="#search"></a>Create ansible role skeleton</h2>
+<h2 id="init"><a class="anchor" href="#init"></a>Create ansible role skeleton</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>1) Create an empty ansible role</strong></p>
@@ -155,24 +179,81 @@
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init mysql</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init haproxy</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="pull"><a class="anchor" href="#pull"></a>Add tasks to deploy MySQL</h2>
+<h2 id="yum"><a class="anchor" href="#yum"></a>Install HAProxy</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?</strong></p>
+<p><strong>2) Add a task to install the following packages using the yum module</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>haproxy</p>
+</li>
+<li>
+<p>socat</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conf"><a class="anchor" href="#conf"></a>Configure HAProxy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>3) Add a task to configure HAProxy using the template module.</strong></p>
 </div>
 <div class="paragraph">
-<p>Pull the image with the command:</p>
+<p>You can start with this configuration template:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">global
+  daemon
+  group  haproxy
+  log  /dev/log local0
+  maxconn  10000
+  pidfile  /var/run/haproxy.pid
+  user  haproxy
+
+defaults
+  log  global
+  mode  tcp
+  retries  3
+  timeout  http-request 10s
+  timeout  queue 1m
+  timeout  connect 10s
+  timeout  client 1m
+  timeout  server 1m
+  timeout  check 10s
+
+frontend main
+    mode http
+    default_backend usal
+
+    # Complete
+    # bind *:80
+
+backend usal
+    balance roundrobin
+
+    # Complete
+    # server example1 10.0.0.1:80
+    # server example2 10.0.0.2:80</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="service"><a class="anchor" href="#service"></a>Enable and start HAProxy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>**4) Add a task to enable and start HAProxy</p>
 </div>
 </div>
 </div>

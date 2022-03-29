@@ -58,7 +58,10 @@
     <a class="nav-link" href="01-role-mysql.html">1. Create an Ansible Role to deploy a MySQL database</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-role-mysql.html#search">K</a>
+    <a class="nav-link" href="01-role-mysql.html#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-role-mysql.html#yum">Install mysqld</a>
   </li>
 </ul>
   </li>
@@ -67,7 +70,16 @@
     <a class="nav-link" href="02-role-httpd.html">2. Create an Ansible Role to deploy a Web Server</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#database">K</a>
+    <a class="nav-link" href="#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#yum">Install httpd</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#selinux">Allow httpd connections to MySQL database</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#service">Start and enable httpd service</a>
   </li>
 </ul>
   </li>
@@ -76,7 +88,16 @@
     <a class="nav-link" href="03-role-haproxy.html">3. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-role-haproxy.html#dockferfile">Ke</a>
+    <a class="nav-link" href="03-role-haproxy.html#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-haproxy.html#yum">Install HAProxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-haproxy.html#conf">Configure HAProxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-haproxy.html#service">Enable and start HAProxy</a>
   </li>
 </ul>
   </li>
@@ -85,13 +106,16 @@
     <a class="nav-link" href="#04-collection.adoc">4. Create a Collection to deploy the Web Solution</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-collection-web.html#dockferfile">K</a>
+    <a class="nav-link" href="04-collection-web.html#init">Create ansible collection skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-collection-web.html#init">Copy the roles to the collection</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="05-playbook.html">5. Create a playbook to deploy the Web Solution using the role created</a>
+    <a class="nav-link" href="05-playbook.html">5. Create a playbook to deploy the Web solution using the collection created</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="05-playbook.html#dockferfile">K</a>
@@ -145,7 +169,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="search"><a class="anchor" href="#search"></a>Create ansible role skeleton</h2>
+<h2 id="init"><a class="anchor" href="#init"></a>Create ansible role skeleton</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>1) Create an empty ansible role</strong></p>
@@ -155,24 +179,45 @@
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init mysql</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init httpd</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="pull"><a class="anchor" href="#pull"></a>Add tasks to deploy MySQL</h2>
+<h2 id="yum"><a class="anchor" href="#yum"></a>Install httpd</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?</strong></p>
+<p><strong>2) Add a task to Install the following packages using the yum module</strong></p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>httpd</p>
+</li>
+<li>
+<p>php</p>
+</li>
+<li>
+<p>php-mysqlnd</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="selinux"><a class="anchor" href="#selinux"></a>Allow httpd connections to MySQL database</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Pull the image with the command:</p>
+<p><strong>3) Add a task to allow httpd connections to MySQL database enabling SELinux boolean httpd_can_network_connect_db</strong></p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7</code></pre>
 </div>
+</div>
+<div class="sect1">
+<h2 id="service"><a class="anchor" href="#service"></a>Start and enable httpd service</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>4) Add a task to start and enable httpd service using the service module</strong></p>
 </div>
 </div>
 </div>
