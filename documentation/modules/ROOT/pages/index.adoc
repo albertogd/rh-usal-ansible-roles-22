@@ -1,94 +1,10 @@
 = Creating an Ansible Collection with 3 Roles
 
-[.text-center.strong]
-== Introduction
-
-Collections are a distribution format for Ansible content that can include playbooks, roles, modules, and plugins.
-
-Roles let you automatically load related vars, files, tasks, handlers, and other Ansible artifacts based on a known file structure. After you group your content in roles, you can easily reuse them and share them with other users.
-
-=== Creating collections
-
-To create a collection:
-
-1. Create a collection skeleton with the collection init command.
-2. Add modules and other content to the collection.
-
-[.lines_7]
-[source,bash,subs="+macros,+attributes"]
-----
-$ ansible-galaxy collection init my_namespace.my_collection
-----
-
-==== Collection directories and files
-
-A collection can contain these directories and files:
-
-[.lines_7]
-[source,bash,subs="+macros,+attributes"]
-----
-collection/
-├── docs/
-├── galaxy.yml
-├── meta/
-│   └── runtime.yml
-├── plugins/
-│   ├── modules/
-│   │   └── module1.py
-│   ├── inventory/
-│   └── .../
-├── README.md
-├── roles/
-│   ├── role1/
-│   ├── role2/
-│   └── .../
-├── playbooks/
-│   ├── files/
-│   ├── vars/
-│   ├── templates/
-│   └── tasks/
-└── tests/
-----
-
-=== Creating roles
-
-Use the init command to initialize the base structure of a new role:
-
-[.lines_7]
-[source,bash,subs="+macros,+attributes"]
-----
-$ ansible-galaxy role init role_name
-----
-
-==== Role directories and files
-
-A role can contain these directories and files:
-
-[.lines_7]
-[source,bash,subs="+macros,+attributes"]
-----
-role_name/
-    README.md
-    .travis.yml
-    defaults/
-        main.yml
-    files/
-    handlers/
-        main.yml
-    meta/
-        main.yml
-    templates/
-    tests/
-        inventory
-        test.yml
-    vars/
-        main.yml
-----
-
 [.tiles.browse]
 == Exercises
 
 In this exercise you'll create an ansible collection with 3 roles to deploy a Web solution. This solution consists of:
+
 - 1 HAProxy
 - 2 HTTPD servers
 - 1 MySQL database
@@ -115,13 +31,13 @@ Create an asnible role named **haproxy** to deploy an HAProxy to load balance th
 
 xref:03-role-haproxy.adoc[Start]
 
-=== 4. Create a Collection to deploy
+=== 4. Create a Collection to deploy the Web Solution
 
 Create an ansible collection named **usal.web** and add the 3 roles. Publish it to a new github repo. 
 
 xref:04-collection-web.adoc[Start]
 
-=== 5. Create a playbook to deploy a web solution using the role created
+=== 5. Create a playbook to deploy the Web Solution using the role created
 
 Create a playbook to use **usal.web** roles using the collection you've just uploaded to your github repository.
 
