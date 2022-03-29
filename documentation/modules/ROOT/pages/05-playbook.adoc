@@ -38,19 +38,19 @@ web.yml
 == Create an inventory
 **2) Create an inventory file named inventory with the hosts and groups**
 
-- mysql
-  - servera.lab.example.com
+* mysql
+** servera.lab.example.com
 
-- webserver
-  - serverb.lab.example.com
-  - serverc.lab.example.com
+* webserver
+** serverb.lab.example.com
+** serverc.lab.example.com
 
-- haproxy
-  - serverd.lab.example.com
+* haproxy
+** serverd.lab.example.com
 
 [#test]
 == Test the playbook with the inventory
-**3) Run the playbook passing as arguments the inventory created
+**3) Run the playbook passing as arguments the inventory created**
 
 [.lines_7]
 [source,bash,subs="+macros,+attributes"]
