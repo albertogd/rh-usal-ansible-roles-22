@@ -2,7 +2,7 @@
 
 In this exercise, you will create a role to deploy MySQL.
 
-[#search]
+[#init]
 == Create ansible role skeleton
 
 **1) Create an empty ansible role**
@@ -15,14 +15,9 @@ Run *ansible-galaxy role init* to create an empty role skeleton:
 $ ansible-galaxy role init mysql
 ----
 
-[#pull]
-== Add tasks to deploy MySQL
+[#yum]
+== Install mysqld
 
-**2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?**
+**2) Add a task to install mysqld package using the yum module**
 
-Pull the image with the command: 
-
-[source,bash,subs="+macros,+attributes"]
-----
-$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7
-----
+    - mysqld

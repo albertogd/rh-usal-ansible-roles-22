@@ -2,27 +2,20 @@
 
 Create a playbook to use the MySQL, Web Server and HAProxy roles.
 
-[#search]
-== Create ansible role skeleton
+[#init]
+== Create ansible collection skeleton
 
-**1) Create an empty ansible role**
+**1) Create an empty ansible collection**
 
-Run *ansible-galaxy role init* to create an empty role skeleton:
+Run *ansible-galaxy collection init* to create an empty collection skeleton:
 
 [.lines_7]
 [source,bash,subs="+macros,+attributes"]
 ----
-$ ansible-galaxy role init mysql
+$ ansible-galaxy collection init usal.web
 ----
 
-[#pull]
-== Add tasks to deploy MySQL
+[#roles]
+== Copy the roles to the collection
 
-**2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?**
-
-Pull the image with the command: 
-
-[source,bash,subs="+macros,+attributes"]
-----
-$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7
-----
+**2) Copy the roles created to the collection in roles folder**

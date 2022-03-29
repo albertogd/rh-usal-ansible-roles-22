@@ -1,28 +1,45 @@
-= Create your own HTTP container image with a Dockerfile
+= Create an ansible playbook to deploy the Web solution
 
-Create a playbook to use the MySQL, Web Server and HAProxy roles.
+Create a playbook to deploy MySQL, Web Server and HAProxy roles using the Web collection.
 
-[#search]
-== Create ansible role skeleton
+[#mysql]
+== Create an ansible playbook to deploy mysql
 
-**1) Create an empty ansible role**
+**1) Create a playbook to deploy mysql**
 
-Run *ansible-galaxy role init* to create an empty role skeleton:
+Create a playbook to deploy mysql. Target the hosts to mysql database.
+
+[#httpd]
+== Create an ansible playbook to deploy httpd
+
+**1) Create a playbook to deploy httpd**
+
+Create a playbook to deploy httpd. Target the hosts to httpd servers.
+
+[#haproxy]
+== Create an ansible playbook to deploy haproxy
+
+**1) Create a playbook to deploy haproxy **
+
+Create a playbook to deploy haproxy. Target the host to haproxy server.
+
+[#web]
+== Create an ansible playbook to deploy web solution
+
+**1) Create a playbook to include the 3 playbooks**
+
+Create a playbook to include the 3 playbooks.
 
 [.lines_7]
 [source,bash,subs="+macros,+attributes"]
 ----
-$ ansible-galaxy role init mysql
-----
+---
+- name: Deploy MySQL
+  import_playbook: deploy_mysql.yml
 
-[#pull]
-== Add tasks to deploy MySQL
+- name: Deploy Web Servers
+  import_playbook: deploy_webservers.yml
 
-**2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?**
-
-Pull the image with the command: 
-
-[source,bash,subs="+macros,+attributes"]
-----
-$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7
+- name: Deploy HAProxy
+  import_playbook: deploy_haproxy.yml
 ----

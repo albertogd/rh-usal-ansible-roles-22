@@ -2,7 +2,7 @@
 
 In this exercise, you will create a role to deploy and configure HAProxy.
 
-[#search]
+[#init]
 == Create ansible role skeleton
 
 **1) Create an empty ansible role**
@@ -12,17 +12,62 @@ Run *ansible-galaxy role init* to create an empty role skeleton:
 [.lines_7]
 [source,bash,subs="+macros,+attributes"]
 ----
-$ ansible-galaxy role init mysql
+$ ansible-galaxy role init haproxy
 ----
 
-[#pull]
-== Add tasks to deploy MySQL
+[#yum]
+== Install HAProxy
 
-**2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?**
+**2) Add a task to install the following packages using the yum module**
 
-Pull the image with the command: 
+- haproxy
+- socat
 
+[#conf]
+== Configure HAProxy
+
+**3) Add a task to configure HAProxy using the template module.**
+
+You can start with this configuration template:
+
+[.lines_7]
 [source,bash,subs="+macros,+attributes"]
 ----
-$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7
+global
+  daemon
+  group  haproxy
+  log  /dev/log local0
+  maxconn  10000
+  pidfile  /var/run/haproxy.pid
+  user  haproxy
+
+defaults
+  log  global
+  mode  tcp
+  retries  3
+  timeout  http-request 10s
+  timeout  queue 1m
+  timeout  connect 10s
+  timeout  client 1m
+  timeout  server 1m
+  timeout  check 10s
+
+frontend main
+    mode http
+    default_backend usal
+    
+    # Complete
+    # bind *:80
+
+backend usal
+    balance roundrobin
+    
+    # Complete
+    # server example1 10.0.0.1:80
+    # server example2 10.0.0.2:80
 ----
+
+[#service]
+== Enable and start HAProxy
+
+**4) Add a task to enable and start HAProxy

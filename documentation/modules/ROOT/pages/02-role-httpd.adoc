@@ -2,7 +2,7 @@
 
 In this exercise, you will create a role to deploy and configure HTTPD.
 
-[#search]
+[#init]
 == Create ansible role skeleton
 
 **1) Create an empty ansible role**
@@ -12,17 +12,27 @@ Run *ansible-galaxy role init* to create an empty role skeleton:
 [.lines_7]
 [source,bash,subs="+macros,+attributes"]
 ----
-$ ansible-galaxy role init mysql
+$ ansible-galaxy role init httpd
 ----
 
-[#pull]
-== Add tasks to deploy MySQL
+[#yum]
+== Install httpd
 
-**2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?**
+**2) Add a task to Install the following packages using the yum module**
 
-Pull the image with the command: 
+    - httpd
+    - php
+    - php-mysqlnd
 
-[source,bash,subs="+macros,+attributes"]
-----
-$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7
-----
+[#selinux]
+== Allow httpd connections to MySQL database
+
+**3) Add a task to allow httpd connections to MySQL database enabling SELinux boolean httpd_can_network_connect_db**
+
+
+[#service]
+== Start and enable httpd service
+
+**4) Add a task to start and enable httpd service using the service module**
+
+
