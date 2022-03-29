@@ -1,6 +1,6 @@
-= Create your own HTTP container image with a Dockerfile
+= Create a Collection to deploy the Web Solution
 
-Create a playbook to use the MySQL, Web Server and HAProxy roles.
+Create an Ansible collection containing the MySQL, Web Server and HAProxy roles.
 
 [#init]
 == Create ansible collection skeleton

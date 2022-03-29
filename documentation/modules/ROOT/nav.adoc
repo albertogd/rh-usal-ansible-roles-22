@@ -18,7 +18,7 @@
 ** xref:03-role-haproxy.adoc#conf[Configure HAProxy]
 ** xref:03-role-haproxy.adoc#service[Enable and start HAProxy]
 
-* xref:04-collection.adoc[4. Create a Collection to deploy the Web Solution]
+* xref:04-collection-web.adoc[4. Create a Collection to deploy the Web Solution]
 ** xref:04-collection-web.adoc#init[Create ansible collection skeleton]
 ** xref:04-collection-web.adoc#init[Copy the roles to the collection]
 
