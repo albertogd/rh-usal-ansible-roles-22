@@ -70,4 +70,4 @@ backend usal
 [#service]
 == Enable and start HAProxy
 
-**4) Add a task to enable and start HAProxy
+**4) Add a task to enable and start HAProxy**
