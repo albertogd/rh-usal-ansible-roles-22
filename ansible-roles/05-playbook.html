@@ -117,7 +117,13 @@
     <a class="nav-link" href="05-playbook.html">5. Create a playbook to deploy the Web solution using the collection created</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#dockferfile">K</a>
+    <a class="nav-link" href="#include">Create an ansible playbook to deploy mysql, httpd and haproxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#inventory">Create an inventory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#test">Test the playbook</a>
   </li>
 </ul>
   </li>
@@ -168,58 +174,81 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="mysql"><a class="anchor" href="#mysql"></a>Create an ansible playbook to deploy mysql</h2>
+<h2 id="include"><a class="anchor" href="#include"></a>Create an ansible playbook to deploy mysql, httpd and haproxy</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>1) Create a playbook to deploy mysql</strong></p>
+<p><strong>1) Create three include_role tasks to include mysql, httpd and haproxy roles</strong></p>
 </div>
 <div class="paragraph">
-<p>Create a playbook to deploy mysql. Target the hosts to mysql database.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="httpd"><a class="anchor" href="#httpd"></a>Create an ansible playbook to deploy httpd</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>2) Create a playbook to deploy httpd</strong></p>
-</div>
-<div class="paragraph">
-<p>Create a playbook to deploy httpd. Target the hosts to httpd servers.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="haproxy"><a class="anchor" href="#haproxy"></a>Create an ansible playbook to deploy haproxy</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>3) Create a playbook to deploy haproxy </strong></p>
-</div>
-<div class="paragraph">
-<p>Create a playbook to deploy haproxy. Target the host to haproxy server.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="web"><a class="anchor" href="#web"></a>Create an ansible playbook to deploy web solution</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>4) Create a playbook to include the 3 playbooks</strong></p>
-</div>
-<div class="paragraph">
-<p>Create a playbook to include the 3 playbooks.</p>
+<p>Add the condition to deploy mysql only in <strong>mysql</strong> group, httpd only in <strong>webserver</strong> group and haproxy in <strong>haproxy</strong> group</p>
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">---
-- name: Deploy MySQL
-  import_playbook: deploy_mysql.yml
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">web.yml
+---
+- name: Deploy Web solution
+  hosts: all
 
-- name: Deploy Web Servers
-  import_playbook: deploy_webservers.yml
+    - name: Deploy MySQL
+      include_role:
+        name: usal.web.mysql
+      when: # Complete
 
-- name: Deploy HAProxy
-  import_playbook: deploy_haproxy.yml</code></pre>
+    - name: Deploy HTTPD server
+      include_role:
+        name: usal.web.httpd
+      when: # Complete
+
+    - name: Deploy HAProxy
+      include_role:
+        name: usal.web.haproxy
+      when: # Complete</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="inventory"><a class="anchor" href="#inventory"></a>Create an inventory</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>2) Create an inventory file named inventory with the hosts and groups</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>mysql</p>
+</li>
+<li>
+<p>servera.lab.example.com</p>
+</li>
+<li>
+<p>webserver</p>
+</li>
+<li>
+<p>serverb.lab.example.com</p>
+</li>
+<li>
+<p>serverc.lab.example.com</p>
+</li>
+<li>
+<p>haproxy</p>
+</li>
+<li>
+<p>serverd.lab.example.com</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="test"><a class="anchor" href="#test"></a>Test the playbook with the inventory</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>**3) Run the playbook passing as arguments the inventory created</p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ansible-playbook -i inventory web.yml</code></pre>
 </div>
 </div>
 </div>
