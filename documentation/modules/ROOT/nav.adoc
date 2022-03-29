@@ -23,4 +23,6 @@
 ** xref:04-collection-web.adoc#init[Copy the roles to the collection]
 
 * xref:05-playbook.adoc[5. Create a playbook to deploy the Web solution using the collection created]
-** xref:05-playbook.adoc#dockferfile[K]
+** xref:05-playbook.adoc#include[Create an ansible playbook to deploy mysql, httpd and haproxy]
+** xref:05-playbook.adoc#inventory[Create an inventory]
+** xref:05-playbook.adoc#test[Test the playbook]

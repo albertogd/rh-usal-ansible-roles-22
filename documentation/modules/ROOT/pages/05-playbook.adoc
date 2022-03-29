@@ -2,44 +2,58 @@
 
 Create a playbook to deploy MySQL, Web Server and HAProxy roles using the Web collection.
 
-[#mysql]
-== Create an ansible playbook to deploy mysql
+[#include]
+== Create an ansible playbook to deploy mysql, httpd and haproxy
 
-**1) Create a playbook to deploy mysql**
+**1) Create three include_role tasks to include mysql, httpd and haproxy roles**
 
-Create a playbook to deploy mysql. Target the hosts to mysql database.
-
-[#httpd]
-== Create an ansible playbook to deploy httpd
-
-**2) Create a playbook to deploy httpd**
-
-Create a playbook to deploy httpd. Target the hosts to httpd servers.
-
-[#haproxy]
-== Create an ansible playbook to deploy haproxy
-
-**3) Create a playbook to deploy haproxy **
-
-Create a playbook to deploy haproxy. Target the host to haproxy server.
-
-[#web]
-== Create an ansible playbook to deploy web solution
-
-**4) Create a playbook to include the 3 playbooks**
-
-Create a playbook to include the 3 playbooks.
+Add the condition to deploy mysql only in **mysql** group, httpd only in **webserver** group and haproxy in **haproxy** group
 
 [.lines_7]
 [source,bash,subs="+macros,+attributes"]
 ----
+web.yml
 ---
-- name: Deploy MySQL
-  import_playbook: deploy_mysql.yml
+- name: Deploy Web solution
+  hosts: all
 
-- name: Deploy Web Servers
-  import_playbook: deploy_webservers.yml
+    - name: Deploy MySQL
+      include_role:
+        name: usal.web.mysql
+      when: # Complete
 
-- name: Deploy HAProxy
-  import_playbook: deploy_haproxy.yml
+    - name: Deploy HTTPD server
+      include_role:
+        name: usal.web.httpd
+      when: # Complete
+
+    - name: Deploy HAProxy
+      include_role:
+        name: usal.web.haproxy
+      when: # Complete
+----
+
+
+[#inventory]
+== Create an inventory
+**2) Create an inventory file named inventory with the hosts and groups**
+
+- mysql
+  - servera.lab.example.com
+
+- webserver
+  - serverb.lab.example.com
+  - serverc.lab.example.com
+
+- haproxy
+  - serverd.lab.example.com
+
+[#test]
+== Test the playbook with the inventory
+**3) Run the playbook passing as arguments the inventory created
+
+[.lines_7]
+[source,bash,subs="+macros,+attributes"]
+----
+ansible-playbook -i inventory web.yml
 ----
