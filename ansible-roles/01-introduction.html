@@ -63,6 +63,18 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="01-role-mysql.html#yum">Install mysqld</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-role-mysql.html#service">Start and enable mysqld service</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-role-mysql.html#firewall">Open MySQL service in Firewall </a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-role-mysql.html#mysqluser">Add the user to mysql</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-role-mysql.html#mysqldb">Add the database to mysql</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -74,6 +86,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="02-role-httpd.html#yum">Install httpd</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-role-httpd.html#firewall">Open httpd service in Firewall</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="02-role-httpd.html#selinux">Allow httpd connections to MySQL database</a>
@@ -94,7 +109,13 @@
     <a class="nav-link" href="03-role-haproxy.html#yum">Install HAProxy</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-role-haproxy.html#conf">Configure HAProxy</a>
+    <a class="nav-link" href="03-role-haproxy.html#template">Create HAProxy template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-haproxy.html#copytemplate">Copy HAProxy template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-haproxy.html#firewall">Open haproxy service in Firewall</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="03-role-haproxy.html#service">Enable and start HAProxy</a>
@@ -103,28 +124,19 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="04-collection-web.html">4. Create a Collection to deploy the Web Solution</a>
+    <a class="nav-link" href="04-playbook.html">4. Create a playbook to deploy the Web solution using the collection created</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-collection-web.html#init">Create ansible collection skeleton</a>
+    <a class="nav-link" href="04-playbook.html#include">Create an ansible playbook to deploy mysql, httpd and haproxy</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-collection-web.html#init">Copy the roles to the collection</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="05-playbook.html">5. Create a playbook to deploy the Web solution using the collection created</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-playbook.html#include">Create an ansible playbook to deploy mysql, httpd and haproxy</a>
+    <a class="nav-link" href="04-playbook.html#webcontent">Copy the content to the web servers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-playbook.html#inventory">Create an inventory</a>
+    <a class="nav-link" href="04-playbook.html#inventory">Create an inventory</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-playbook.html#test">Test the playbook</a>
+    <a class="nav-link" href="04-playbook.html#test">Deploy the solution</a>
   </li>
 </ul>
   </li>

@@ -63,6 +63,18 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#yum">Install mysqld</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#service">Start and enable mysqld service</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#firewall">Open MySQL service in Firewall </a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#mysqluser">Add the user to mysql</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#mysqldb">Add the database to mysql</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -74,6 +86,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="02-role-httpd.html#yum">Install httpd</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-role-httpd.html#firewall">Open httpd service in Firewall</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="02-role-httpd.html#selinux">Allow httpd connections to MySQL database</a>
@@ -94,7 +109,13 @@
     <a class="nav-link" href="03-role-haproxy.html#yum">Install HAProxy</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-role-haproxy.html#conf">Configure HAProxy</a>
+    <a class="nav-link" href="03-role-haproxy.html#template">Create HAProxy template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-haproxy.html#copytemplate">Copy HAProxy template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-haproxy.html#firewall">Open haproxy service in Firewall</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="03-role-haproxy.html#service">Enable and start HAProxy</a>
@@ -103,28 +124,19 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="04-collection-web.html">4. Create a Collection to deploy the Web Solution</a>
+    <a class="nav-link" href="04-playbook.html">4. Create a playbook to deploy the Web solution using the collection created</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-collection-web.html#init">Create ansible collection skeleton</a>
+    <a class="nav-link" href="04-playbook.html#include">Create an ansible playbook to deploy mysql, httpd and haproxy</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-collection-web.html#init">Copy the roles to the collection</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="05-playbook.html">5. Create a playbook to deploy the Web solution using the collection created</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-playbook.html#include">Create an ansible playbook to deploy mysql, httpd and haproxy</a>
+    <a class="nav-link" href="04-playbook.html#webcontent">Copy the content to the web servers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-playbook.html#inventory">Create an inventory</a>
+    <a class="nav-link" href="04-playbook.html#inventory">Create an inventory</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-playbook.html#test">Test the playbook</a>
+    <a class="nav-link" href="04-playbook.html#test">Deploy the solution</a>
   </li>
 </ul>
   </li>
@@ -170,7 +182,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this exercise, you will create a role to deploy MySQL.</p>
+<p>In this exercise, you will create a role to deploy MySQL. All the tasks in this role needs to be executed as root.</p>
 </div>
 </div>
 </div>
@@ -191,17 +203,102 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="yum"><a class="anchor" href="#yum"></a>Install mysqld</h2>
+<h2 id="yum"><a class="anchor" href="#yum"></a>Install mysql server</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>2) Add a task to install mysqld package using the yum module</strong></p>
 </div>
+<div class="paragraph">
+<p>Install the packages:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>mysqld</p>
+<p>mysql-server</p>
+</li>
+<li>
+<p>python3-PyMySQL</p>
 </li>
 </ul>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Install mysql-server and python3-PyMySQL packages
+    yum:
+      name: # Complete
+      state: # Complete</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="service"><a class="anchor" href="#service"></a>Start and enable mysqld service</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>3) Add a task to start and enable mysqld service using the service module</strong></p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Enable and start mysql service
+    service:
+      name: # Complete
+      enabled: # Complete
+      state: # Complete</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="firewall"><a class="anchor" href="#firewall"></a>Open MySQL service in Firewall</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>4) Add a task to Open MySQL service in Firewall </strong></p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Open MySQL service in Firewall
+    firewalld:
+      permanent: # Complete
+      state: # Complete
+      service: # Complete
+      immediate: # Complete</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mysqluser"><a class="anchor" href="#mysqluser"></a>Add the user to mysql</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>5) Add a task to add the user to MySQL </strong></p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Add user to MySQL
+    mysql_user:
+      name: # Complete
+      password: # Complete
+      host: "%"
+      priv: '*.*:ALL'
+      state: # Complete
+    no_log: true</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mysqldb"><a class="anchor" href="#mysqldb"></a>Add the database to mysql</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>6) Add a task to add the database to MySQL </strong></p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: create a new database
+    mysql_db:
+      name: # Complete
+      state: present</code></pre>
+</div>
 </div>
 </div>
 </div>
