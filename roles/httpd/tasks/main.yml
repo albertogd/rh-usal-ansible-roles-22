@@ -1,0 +1,32 @@
+---
+- block:
+
+  - name: Install httpd packages
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - httpd
+      - php
+      - php-mysqlnd
+
+  - name: Open http service in Firewall 
+    firewalld:
+      permanent: true
+      state: "enabled"
+      service: "http"
+      immediate: true
+
+  - name: Allow httpd connections to a database with SELinux
+    seboolean:
+      name: httpd_can_network_connect_db
+      persistent: true
+      state: true
+
+  - name: Start and enable httpd service
+    service:
+      name: httpd
+      enabled: true
+      state: started
+  
+  become: true

@@ -1,0 +1,30 @@
+global
+  daemon
+  group  haproxy
+  log  /dev/log local0
+  maxconn  10000
+  pidfile  /var/run/haproxy.pid
+  user  haproxy
+
+defaults
+  log  global
+  mode  http
+  retries  3
+  timeout  http-request 10s
+  timeout  queue 1m
+  timeout  connect 10s
+  timeout  client 1m
+  timeout  server 1m
+  timeout  check 10s
+
+frontend main
+  mode http
+  default_backend usal
+  bind *:80
+
+backend usal
+  balance roundrobin
+    
+{% for host in groups["webserver"]  %}
+  server {{ hostvars[host].inventory_hostname }} {{ hostvars[host].ansible_default_ipv4.address  }}:80
+{% endfor %}

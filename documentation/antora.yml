@@ -1,7 +1,0 @@
-name: ansible-roles
-title: Creating Ansible Roles
-version: master
-nav:
-  - modules/ROOT/nav.adoc
-
-start_page: ROOT:index.adoc

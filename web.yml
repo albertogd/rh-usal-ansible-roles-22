@@ -1,0 +1,40 @@
+---
+- name: Deploy Web solution
+  hosts: all
+
+  tasks:
+
+    - name: Deploy MySQL
+      include_role:
+        name: mysql
+
+      when: "'mysql' in group_names"
+      tags: mysql
+
+
+    - name: Deploy and add content to web server
+      block:
+
+        - name: Deploy HTTPD
+          include_role:
+            name: httpd
+
+        - name: Add web content
+          template:
+            src: "{{ item }}.j2"
+            dest: "/var/www/html/{{ item }}"
+          become: true
+          loop:
+            - index.php
+            - add_employee.php
+
+      when: "'webserver' in group_names"
+      tags: httpd
+
+
+    - name: Deploy HAProxy
+      include_role:
+        name: haproxy
+
+      when: "'haproxy' in group_names"
+      tags: haproxy

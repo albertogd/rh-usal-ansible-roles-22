@@ -1,0 +1,58 @@
+<html>
+
+   <style>  
+     .cell {
+       display: table-cell;
+       vertical-align: middle;
+       text-align: center; /* the key */
+       background-color: #EEEEEE;
+     }
+   </style>
+   
+   <head>
+      <title>Employees - Host {{ ansible_fqdn }}</title>
+   </head>
+   
+   <body>
+      <h3>Employees - Host {{ ansible_fqdn }}</h3>
+      <?php
+          $dbhost = "{{ hostvars[groups["mysql"][0]]['ansible_default_ipv4']['address'] }}:3306";
+          $dbuser = "{{ mysql_user }}";
+          $dbpass = "{{ mysql_password }}";
+          $db = "{{ mysql_database }}";
+          $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+            
+          if(! $conn ) {
+             die('Could not connect: ' . $conn -> connect_error);
+          }
+
+          // Initialize table
+          $sql = "{{ mysql_table_sql }}" ;
+          $conn->query($sql);
+
+          $sql = "SELECT * FROM {{ mysql_table}}";
+          
+          if ($result = $conn -> query($sql)) {
+      ?>
+          
+          <form method = "post" action = "<?php $_PHP_SELF ?>">
+              <table class = "cell" width = "400" border = "0" cellspacing = "1" cellpadding = "2">
+                <tr><th>Employee Name</th><th>Employee Address</th><th>Employee Salary</th><th>Employee Join Date</th><tr>
+                
+                <?php while ($row = $result -> fetch_assoc()) {  ?>         
+                <tr>
+                  <td><?php echo $row['emp_name']; ?></td>
+                  <td><?php echo $row['emp_address']; ?></td>
+                  <td><?php echo $row['emp_salary']; ?></td>
+                  <td><?php echo $row['emp_join']; ?></td>
+                 </tr>
+                 <?php }
+                 $result -> free_result();
+                 } 
+                 $conn -> close(); ?>
+              </table>
+          </form>
+          
+          <p><a href="add_employee.php">Add employee</a></p>
+   </body>
+</html>

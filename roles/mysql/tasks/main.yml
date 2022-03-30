@@ -1,0 +1,38 @@
+---
+- block:
+
+  - name: Install mysql-server package
+    yum:
+      name:
+        - mysql-server
+        - python3-PyMySQL
+      state: present
+
+  - name: Enable and start mysql service
+    service:
+      name: mysqld
+      enabled: true
+      state: started
+
+  - name: Open MySQL service in Firewall 
+    firewalld:
+      permanent: true
+      state: "enabled"
+      service: "mysql"
+      immediate: true
+
+  - name: Add user to MySQL
+    mysql_user:
+      name: "{{ mysql_user }}"
+      password: "{{ mysql_password }}"
+      host: "%"
+      priv: '*.*:ALL'
+      state: present
+    no_log: true
+
+  - name: create a new database  
+    mysql_db:
+      name: "{{ mysql_database }}"
+      state: present
+    
+  become: true

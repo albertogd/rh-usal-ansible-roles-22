@@ -1,0 +1,32 @@
+---
+- block:
+  
+  - name: Install haproxy packages
+    yum:
+      name:
+        - haproxy
+        - socat
+      state: present
+
+  - name: Configure haproxy
+    template:
+      src: haproxy.cfg.j2
+      dest: /etc/haproxy/haproxy.cfg
+      owner: root
+      group: root
+      mode: 0644
+  
+  - name: Enable and start haproxy
+    service:
+      name: haproxy
+      enabled: true
+      state: started
+
+  - name: Open http service in Firewall 
+    firewalld:
+      permanent: true
+      state: "enabled"
+      service: "http"
+      immediate: true
+
+  become: true

@@ -1,0 +1,10 @@
+[mysql]
+db ansible_host=servera.lab.example.com ansible_user=devops
+
+[webserver]
+web1 ansible_host=serverb.lab.example.com ansible_user=devops
+web2 ansible_host=serverc.lab.example.com ansible_user=devops
+
+[haproxy]
+lb ansible_host=serverd.lab.example.com ansible_user=devops
+
