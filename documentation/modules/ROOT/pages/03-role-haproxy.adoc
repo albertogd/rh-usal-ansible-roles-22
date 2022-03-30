@@ -23,15 +23,24 @@ $ ansible-galaxy role init haproxy
 - haproxy
 - socat
 
-[#conf]
-== Configure HAProxy
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Install haproxy packages
+    yum:
+      name: # Complete
+      state: # Complete
+----
 
-**3) Add a task to configure HAProxy using the template module.**
+[#template]
+== Create HAProxy template
 
-You can start with this configuration template:
+**3) Create the file haproxy.cfg.j2 in templates folder.**
+
+The template file should be like:
 
 [.lines_7]
-[source,bash,subs="+macros,+attributes"]
+[source,conf,subs="+macros,+attributes"]
 ----
 global
   daemon
@@ -43,7 +52,7 @@ global
 
 defaults
   log  global
-  mode  tcp
+  mode  http
   retries  3
   timeout  http-request 10s
   timeout  queue 1m
@@ -67,7 +76,51 @@ backend usal
     # server example2 10.0.0.2:80
 ----
 
+[#copytemplate]
+== Copy HAProxy template
+
+**4) Add a task to copy HAProxy template.**
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Configure haproxy
+    template:
+      src: # Complete
+      dest: /etc/haproxy/haproxy.cfg
+      owner: root
+      group: root
+      mode: 0644
+----
+
+[#firewall]
+== Open haproxy service in Firewall 
+
+**5) Add a task to Open HAProxy (http) service in Firewall **
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Open HAProxy service in Firewall 
+    firewalld:
+      permanent: # Complete
+      state: # Complete
+      service: # Complete
+      immediate: # Complete
+----
+
 [#service]
 == Enable and start HAProxy
 
-**4) Add a task to enable and start HAProxy**
+**6) Add a task to enable and start HAProxy**
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Enable and start haproxy
+    service:
+      name: # Complete
+      enabled: # Complete
+      state: # Complete
+----
+

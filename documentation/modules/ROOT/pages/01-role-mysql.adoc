@@ -1,6 +1,6 @@
 = Deploying a MySQL ansible role
 
-In this exercise, you will create a role to deploy MySQL.
+In this exercise, you will create a role to deploy MySQL. All the tasks in this role needs to be executed as root.
 
 [#init]
 == Create ansible role skeleton
@@ -16,8 +16,86 @@ $ ansible-galaxy role init mysql
 ----
 
 [#yum]
-== Install mysqld
+== Install mysql server
 
 **2) Add a task to install mysqld package using the yum module**
 
-    - mysqld
+Install the packages:
+
+    - mysql-server
+    - python3-PyMySQL
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Install mysql-server and python3-PyMySQL packages
+    yum:
+      name: # Complete
+      state: # Complete
+----
+
+[#service]
+== Start and enable mysqld service
+
+**3) Add a task to start and enable mysqld service using the service module**
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Enable and start mysql service
+    service:
+      name: # Complete
+      enabled: # Complete
+      state: # Complete
+----
+
+
+[#firewall]
+== Open MySQL service in Firewall 
+
+**4) Add a task to Open MySQL service in Firewall **
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Open MySQL service in Firewall 
+    firewalld:
+      permanent: # Complete
+      state: # Complete
+      service: # Complete
+      immediate: # Complete
+----
+
+
+[#mysqluser]
+== Add the user to mysql
+
+**5) Add a task to add the user to MySQL **
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Add user to MySQL
+    mysql_user:
+      name: # Complete
+      password: # Complete
+      host: "%"
+      priv: '*.*:ALL'
+      state: # Complete
+    no_log: true
+----
+
+[#mysqldb]
+== Add the database to mysql
+
+**6) Add a task to add the database to MySQL **
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: create a new database  
+    mysql_db:
+      name: # Complete
+      state: present
+----
+

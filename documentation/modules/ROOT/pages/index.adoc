@@ -3,42 +3,36 @@
 [.tiles.browse]
 == Exercises
 
-In this exercise you'll create an ansible collection with 3 roles to deploy a Web solution. This solution consists of:
+In this exercise you'll create 3 roles to deploy a Web solution. This solution consists of:
 
 - 1 HAProxy
 - 2 HTTPD servers
 - 1 MySQL database
 
-The roles must deploy this solution, using one index.php which displays the content of the database.
+A playbook including the roles and a task to copy the web content (2 php files), must deploy this solution.
 
 image::Red_Hat_Academy_USAL_Collections_and_Roles.png[]
 
 === 1. Create an Ansible Role to deploy a MySQL database
 
-Create an asnible role named **mysql** to deploy MYSQL server and create a database.
+Create an asnible role named **mysql** to deploy a MYSQL server.
 
 xref:01-role-mysql.adoc[Start]
 
 === 2. Create an Ansible Role to deploy a Web Server
 
-Create an asnible role named **httpd**  to deploy two web servers, which returns some content stored in the databsase.
+Create an asnible role named **httpd**  to deploy web servers.
 
 xref:02-role-httpd.adoc[Start]
 
 === 3. Create an Ansible Role to deploy a HAProxy Load Balancer
 
-Create an asnible role named **haproxy** to deploy an HAProxy to load balance the requests to the web server.
+Create an asnible role named **haproxy** to deploy an HAProxy to load balance the requests to the web servers.
 
 xref:03-role-haproxy.adoc[Start]
 
-=== 4. Create a Collection to deploy the Web Solution
+=== 4. Create a playbook to deploy the Web Solution using the roles created
 
-Create an ansible collection named **usal.web** and add the 3 roles. Publish it to a new github repo. 
+Create a playbook to use the 3 roles created. Add a task to copy the web content (2 php files). Run the playbook and test the solution.
 
-xref:04-collection-web.adoc[Start]
-
-=== 5. Create a playbook to deploy the Web Solution using the role created
-
-Create a playbook to use **usal.web** roles using the collection you've just uploaded to your github repository.
-
-xref:05-playbook.adoc[Start]
+xref:04-playbook.adoc[Start]

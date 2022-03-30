@@ -1,0 +1,85 @@
+= Create an ansible playbook to deploy the Web solution
+
+Create a playbook to deploy MySQL, Web Server and HAProxy roles using the Web collection.
+
+[#include]
+== Create an ansible playbook to deploy mysql, httpd and haproxy
+
+**1) Create three include_role tasks to include mysql, httpd and haproxy roles**
+
+Add the condition to deploy mysql only in **mysql** group, httpd only in **webserver** group and haproxy in **haproxy** group
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+web.yml
+---
+- name: Deploy Web solution
+  hosts: all
+
+  tasks:
+
+    - name: Deploy MySQL
+      include_role:
+        name: mysql
+      when: # Complete - this role should run only in mysql host group
+
+    - name: Deploy HTTPD server
+      include_role:
+        name: httpd
+      when: # Complete - this role should run only in webserver hosts group
+
+    - name: Deploy HAProxy
+      include_role:
+        name: haproxy
+      when: # Complete - this role should run only in haproxy host group
+----
+
+[#webcontent]
+== Copy the content to the web servers
+
+**2) Add a task to copy the content to the web servers**
+
+Copy the template files , and add a task to copy the content from the template files to the web servers. 
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+        - name: Add web content
+          template:
+            src: # Complete 
+            dest: # Complete 
+          become: true
+          loop:
+            - index.php
+            - add_employee.php
+          when: # Complete - this task should run only in webserver hosts group
+----
+
+[#inventory]
+== Create an inventory
+
+**3) Create an inventory file named inventory with the hosts and groups**
+
+Add the variable ansible_user=devops in all the hosts. You can add it in the inventory or in group_vars.
+
+* mysql
+** servera.lab.example.com
+
+* webserver
+** serverb.lab.example.com
+** serverc.lab.example.com
+
+* haproxy
+** serverd.lab.example.com
+
+[#test]
+== Deploy the solution
+
+**4) Run the playbook web.yml passing as argument the inventory created**
+
+[.lines_7]
+[source,bash,subs="+macros,+attributes"]
+----
+ansible-playbook -i inventory web.yml
+----

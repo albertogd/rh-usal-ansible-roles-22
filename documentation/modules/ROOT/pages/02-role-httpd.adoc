@@ -24,15 +24,62 @@ $ ansible-galaxy role init httpd
     - php
     - php-mysqlnd
 
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Install httpd packages
+    yum:
+      name: # Complete 
+      state: # Complete 
+    loop:
+      - httpd
+      - php
+      - php-mysqlnd
+----
+
+[#firewall]
+== Open httpd service in Firewall 
+
+**3) Add a task to Open http service in Firewall **
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Open HTTPD service in Firewall 
+    firewalld:
+      permanent: # Complete
+      state: # Complete
+      service: # Complete
+      immediate: # Complete
+----
+
 [#selinux]
 == Allow httpd connections to MySQL database
 
-**3) Add a task to allow httpd connections to MySQL database enabling SELinux boolean httpd_can_network_connect_db**
+**4) Add a task to allow httpd connections to MySQL database enabling SELinux boolean httpd_can_network_connect_db**
 
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Allow httpd connections to a database with SELinux
+    seboolean:
+      name: httpd_can_network_connect_db
+      persistent: # Complete 
+      state: # Complete 
+----
 
 [#service]
 == Start and enable httpd service
 
-**4) Add a task to start and enable httpd service using the service module**
+**5) Add a task to start and enable httpd service using the service module**
 
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+  - name: Enable and start httpd service
+    service:
+      name: # Complete
+      enabled: # Complete
+      state: # Complete
+----
 
