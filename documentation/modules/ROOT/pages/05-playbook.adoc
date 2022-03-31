@@ -63,7 +63,7 @@ Add a variable named mysql with the value "CREATE TABLE IF NOT EXISTS employee (
 [#test]
 == Deploy the solution
 
-**4) Run the playbook web.yml passing as argument the inventory created**
+**3) Run the playbook web.yml passing as argument the inventory created**
 
 [.lines_7]
 [source,bash,subs="+macros,+attributes"]
