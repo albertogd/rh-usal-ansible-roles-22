@@ -42,7 +42,13 @@ web.yml
 
 Copy the template files , and add a task to copy the content from the template files to the web servers.
 
-Add a variable named mysql with the value "CREATE TABLE IF NOT EXISTS employee ( emp_id INT AUTO_INCREMENT PRIMARY KEY, emp_name VARCHAR(255) NOT NULL, emp_address VARCHAR(255) NOT NULL, emp_salary INT, emp_join DATE )"
+Add a variable named mysql_table_sql with the value:
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+mysql_table_sql: "CREATE TABLE IF NOT EXISTS employee ( emp_id INT AUTO_INCREMENT PRIMARY KEY, emp_name VARCHAR(255) NOT NULL, emp_address VARCHAR(255) NOT NULL, emp_salary INT, emp_join DATE )"
+----
 
 [.lines_7]
 [source,yaml,subs="+macros,+attributes"]
