@@ -31,10 +31,6 @@ $ ansible-galaxy role init httpd
     yum:
       name: # Complete 
       state: # Complete 
-    loop:
-      - httpd
-      - php
-      - php-mysqlnd
 ----
 
 [#firewall]

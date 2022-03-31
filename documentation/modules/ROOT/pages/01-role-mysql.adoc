@@ -15,10 +15,35 @@ Run *ansible-galaxy role init* to create an empty role skeleton:
 $ ansible-galaxy role init mysql
 ----
 
+[#vars]
+== Create group vars
+
+**2) Create some MySQL group vars we'll need to use:**
+
+Create a folder named group_vars in your working folder, and inside group_vars, create another folder named all.
+Inside this folder, create a file named database.yml with the following variables:
+
+- mysql_user: usal
+- mysql_password: usal2022
+- mysql_database: employees
+- mysql_table: employee
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+group_vars/all/database.yml
+---
+mysql_user: usal
+mysql_password: usal2022
+mysql_database: employees
+mysql_table: employee
+----
+
+
 [#yum]
 == Install mysql server
 
-**2) Add a task to install mysqld package using the yum module**
+**3) Add a task to install mysqld package using the yum module**
 
 Install the packages:
 
@@ -37,7 +62,7 @@ Install the packages:
 [#service]
 == Start and enable mysqld service
 
-**3) Add a task to start and enable mysqld service using the service module**
+**4) Add a task to start and enable mysqld service using the service module**
 
 [.lines_7]
 [source,yaml,subs="+macros,+attributes"]
@@ -53,7 +78,7 @@ Install the packages:
 [#firewall]
 == Open MySQL service in Firewall 
 
-**4) Add a task to Open MySQL service in Firewall **
+**5) Add a task to Open MySQL service in Firewall **
 
 [.lines_7]
 [source,yaml,subs="+macros,+attributes"]
@@ -70,7 +95,7 @@ Install the packages:
 [#mysqluser]
 == Add the user to mysql
 
-**5) Add a task to add the user to MySQL **
+**6) Add a task to add the user to MySQL **
 
 [.lines_7]
 [source,yaml,subs="+macros,+attributes"]
@@ -88,7 +113,7 @@ Install the packages:
 [#mysqldb]
 == Add the database to mysql
 
-**6) Add a task to add the database to MySQL **
+**7) Add a task to add the database to MySQL **
 
 [.lines_7]
 [source,yaml,subs="+macros,+attributes"]

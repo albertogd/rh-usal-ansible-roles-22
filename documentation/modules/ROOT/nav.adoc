@@ -4,6 +4,7 @@
 
 * xref:01-role-mysql.adoc[1. Create an Ansible Role to deploy a MySQL database]
 ** xref:01-role-mysql.adoc#init[Create ansible role skeleton]
+** xref:01-role-mysql.adoc#vars[Create group vars]
 ** xref:01-role-mysql.adoc#yum[Install mysqld]
 ** xref:01-role-mysql.adoc#service[Start and enable mysqld service]
 ** xref:01-role-mysql.adoc#firewall[Open MySQL service in Firewall ]
