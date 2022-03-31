@@ -240,7 +240,12 @@
 <p>Copy the template files , and add a task to copy the content from the template files to the web servers.</p>
 </div>
 <div class="paragraph">
-<p>Add a variable named mysql with the value "CREATE TABLE IF NOT EXISTS employee ( emp_id INT AUTO_INCREMENT PRIMARY KEY, emp_name VARCHAR(255) NOT NULL, emp_address VARCHAR(255) NOT NULL, emp_salary INT, emp_join DATE )"</p>
+<p>Add a variable named mysql_table_sql with the value:</p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">mysql_table_sql: "CREATE TABLE IF NOT EXISTS employee ( emp_id INT AUTO_INCREMENT PRIMARY KEY, emp_name VARCHAR(255) NOT NULL, emp_address VARCHAR(255) NOT NULL, emp_salary INT, emp_join DATE )"</code></pre>
+</div>
 </div>
 <div class="listingblock lines_7">
 <div class="content">
