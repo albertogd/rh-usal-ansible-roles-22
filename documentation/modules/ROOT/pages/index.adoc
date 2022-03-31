@@ -1,4 +1,4 @@
-= Creating an Ansible Collection with 3 Roles
+= Creating an Ansible Web automation solution with 3 Roles
 
 [.tiles.browse]
 == Exercises
