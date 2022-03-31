@@ -60,6 +60,9 @@
     <a class="nav-link" href="01-role-mysql.html#init">Create ansible role skeleton</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-role-mysql.html#vars">Create group vars</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="01-role-mysql.html#yum">Install mysqld</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -230,9 +233,14 @@
 <div class="paragraph">
 <p>Copy the template files , and add a task to copy the content from the template files to the web servers.</p>
 </div>
+<div class="paragraph">
+<p>Add a variable named mysql with the value "CREATE TABLE IF NOT EXISTS employee ( emp_id INT AUTO_INCREMENT PRIMARY KEY, emp_name VARCHAR(255) NOT NULL, emp_address VARCHAR(255) NOT NULL, emp_salary INT, emp_join DATE )"</p>
+</div>
 <div class="listingblock lines_7">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">        - name: Add web content
+          vars:
+            mysql_table_sql: "CREATE TABLE IF NOT EXISTS employee ( emp_id INT AUTO_INCREMENT PRIMARY KEY, emp_name VARCHAR(255) NOT NULL, emp_address VARCHAR(255) NOT NULL, emp_salary INT, emp_join DATE )"
           template:
             src: # Complete
             dest: # Complete
