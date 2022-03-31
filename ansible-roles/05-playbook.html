@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Create an ansible playbook to deploy the Web solution :: Creating Ansible Roles</title>
     <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/05-playbook.html">
-    <link rel="prev" href="04-collection-web.html">
+    <link rel="prev" href="04-role-haproxy.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
 <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
@@ -42,73 +42,94 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="01-introduction.html">Introduction to Collections and Roles</a>
+    <a class="nav-link" href="00-introduction.html">Introduction to Collections and Roles</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#01-setup.adoc#collections">Collections</a>
+    <a class="nav-link" href="#00-setup.adoc#collections">Collections</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#01-setup.adoc#roles">Roles</a>
+    <a class="nav-link" href="#00-setup.adoc#roles">Roles</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="01-role-mysql.html">1. Create an Ansible Role to deploy a MySQL database</a>
+    <a class="nav-link" href="01-inventory.html">1. Create inventory and group_vars</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-role-mysql.html#init">Create ansible role skeleton</a>
+    <a class="nav-link" href="01-inventory.html#inventory">Create the inventory</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-role-mysql.html#yum">Install mysqld</a>
+    <a class="nav-link" href="01-inventory.html#vars">Create the group_vars</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="02-role-httpd.html">2. Create an Ansible Role to deploy a Web Server</a>
+    <a class="nav-link" href="02-role-mysql.html">2. Create an Ansible Role to deploy a MySQL database</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-role-httpd.html#init">Create ansible role skeleton</a>
+    <a class="nav-link" href="02-role-mysql.html#init">Create ansible role skeleton</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-role-httpd.html#yum">Install httpd</a>
+    <a class="nav-link" href="02-role-mysql.html#yum">Install mysqld</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-role-httpd.html#selinux">Allow httpd connections to MySQL database</a>
+    <a class="nav-link" href="02-role-mysql.html#service">Start and enable mysqld service</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-role-httpd.html#service">Start and enable httpd service</a>
+    <a class="nav-link" href="02-role-mysql.html#firewall">Open MySQL service in Firewall </a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-role-mysql.html#mysqluser">Add the user to mysql</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-role-mysql.html#mysqldb">Add the database to mysql</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="03-role-haproxy.html">3. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
+    <a class="nav-link" href="03-role-httpd.html">3. Create an Ansible Role to deploy a Web Server</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-role-haproxy.html#init">Create ansible role skeleton</a>
+    <a class="nav-link" href="03-role-httpd.html#init">Create ansible role skeleton</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-role-haproxy.html#yum">Install HAProxy</a>
+    <a class="nav-link" href="03-role-httpd.html#yum">Install httpd</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-role-haproxy.html#conf">Configure HAProxy</a>
+    <a class="nav-link" href="03-role-httpd.html#firewall">Open httpd service in Firewall</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-role-haproxy.html#service">Enable and start HAProxy</a>
+    <a class="nav-link" href="03-role-httpd.html#selinux">Allow httpd connections to MySQL database</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-httpd.html#service">Start and enable httpd service</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="04-collection-web.html">4. Create a Collection to deploy the Web Solution</a>
+    <a class="nav-link" href="04-role-haproxy.html">4. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-collection-web.html#init">Create ansible collection skeleton</a>
+    <a class="nav-link" href="04-role-haproxy.html#init">Create ansible role skeleton</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-collection-web.html#init">Copy the roles to the collection</a>
+    <a class="nav-link" href="04-role-haproxy.html#yum">Install HAProxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-role-haproxy.html#template">Create HAProxy template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-role-haproxy.html#copytemplate">Copy HAProxy template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-role-haproxy.html#firewall">Open haproxy service in Firewall</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-role-haproxy.html#service">Enable and start HAProxy</a>
   </li>
 </ul>
   </li>
@@ -120,10 +141,10 @@
     <a class="nav-link" href="#include">Create an ansible playbook to deploy mysql, httpd and haproxy</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#inventory">Create an inventory</a>
+    <a class="nav-link" href="#webcontent">Copy the content to the web servers</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#test">Test the playbook</a>
+    <a class="nav-link" href="#test">Deploy the solution</a>
   </li>
 </ul>
   </li>
@@ -184,79 +205,65 @@
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">web.yml
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">web.yml
 ---
 - name: Deploy Web solution
   hosts: all
 
+  tasks:
+
     - name: Deploy MySQL
       include_role:
-        name: usal.web.mysql
-      when: # Complete
+        name: mysql
+      when: # Complete - this role should run only in mysql host group
 
     - name: Deploy HTTPD server
       include_role:
-        name: usal.web.httpd
-      when: # Complete
+        name: httpd
+      when: # Complete - this role should run only in webserver hosts group
 
     - name: Deploy HAProxy
       include_role:
-        name: usal.web.haproxy
-      when: # Complete</code></pre>
+        name: haproxy
+      when: # Complete - this role should run only in haproxy host group</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="inventory"><a class="anchor" href="#inventory"></a>Create an inventory</h2>
+<h2 id="webcontent"><a class="anchor" href="#webcontent"></a>Copy the content to the web servers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>2) Create an inventory file named inventory with the hosts and groups</strong></p>
+<p><strong>2) Add a task to copy the content to the web servers</strong></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>mysql</p>
-<div class="ulist">
-<ul>
-<li>
-<p>servera.lab.example.com</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Copy the template files , and add a task to copy the content from the template files to the web servers.</p>
 </div>
-</li>
-<li>
-<p>webserver</p>
-<div class="ulist">
-<ul>
-<li>
-<p>serverb.lab.example.com</p>
-</li>
-<li>
-<p>serverc.lab.example.com</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Add a variable named mysql with the value "CREATE TABLE IF NOT EXISTS employee ( emp_id INT AUTO_INCREMENT PRIMARY KEY, emp_name VARCHAR(255) NOT NULL, emp_address VARCHAR(255) NOT NULL, emp_salary INT, emp_join DATE )"</p>
 </div>
-</li>
-<li>
-<p>haproxy</p>
-<div class="ulist">
-<ul>
-<li>
-<p>serverd.lab.example.com</p>
-</li>
-</ul>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">        - name: Add web content
+          vars:
+            mysql_table_sql: "CREATE TABLE IF NOT EXISTS employee ( emp_id INT AUTO_INCREMENT PRIMARY KEY, emp_name VARCHAR(255) NOT NULL, emp_address VARCHAR(255) NOT NULL, emp_salary INT, emp_join DATE )"
+          template:
+            src: # Complete
+            dest: # Complete
+          become: true
+          loop:
+            - index.php
+            - add_employee.php
+          when: # Complete - this task should run only in webserver hosts group</code></pre>
 </div>
-</li>
-</ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="test"><a class="anchor" href="#test"></a>Test the playbook with the inventory</h2>
+<h2 id="test"><a class="anchor" href="#test"></a>Deploy the solution</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>3) Run the playbook passing as arguments the inventory created</strong></p>
+<p><strong>4) Run the playbook web.yml passing as argument the inventory created</strong></p>
 </div>
 <div class="listingblock lines_7">
 <div class="content">
@@ -266,7 +273,7 @@
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="04-collection-web.html">4. Create a Collection to deploy the Web Solution</a></span>
+  <span class="prev"><a href="04-role-haproxy.html">4. Create an Ansible Role to deploy a HAProxy Load Balancer</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Deploying a MySQL ansible role :: Creating Ansible Roles</title>
     <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/02-role-mysql.html">
-    <link rel="prev" href="01-setup.html">
+    <link rel="prev" href="01-inventory.html">
     <link rel="next" href="03-role-httpd.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
@@ -43,10 +43,25 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="01-setup.html">1. Setup</a>
+    <a class="nav-link" href="00-introduction.html">Introduction to Collections and Roles</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-setup.html#prerequisite">Prerequisites</a>
+    <a class="nav-link" href="#00-setup.adoc#collections">Collections</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#00-setup.adoc#roles">Roles</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-inventory.html">1. Create inventory and group_vars</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-inventory.html#inventory">Create the inventory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-inventory.html#vars">Create the group_vars</a>
   </li>
 </ul>
   </li>
@@ -55,7 +70,22 @@
     <a class="nav-link" href="02-role-mysql.html">2. Create an Ansible Role to deploy a MySQL database</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#search">K</a>
+    <a class="nav-link" href="#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#yum">Install mysqld</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#service">Start and enable mysqld service</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#firewall">Open MySQL service in Firewall </a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#mysqluser">Add the user to mysql</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#mysqldb">Add the database to mysql</a>
   </li>
 </ul>
   </li>
@@ -64,7 +94,19 @@
     <a class="nav-link" href="03-role-httpd.html">3. Create an Ansible Role to deploy a Web Server</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="03-role-httpd.html#database">K</a>
+    <a class="nav-link" href="03-role-httpd.html#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-httpd.html#yum">Install httpd</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-httpd.html#firewall">Open httpd service in Firewall</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-httpd.html#selinux">Allow httpd connections to MySQL database</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-role-httpd.html#service">Start and enable httpd service</a>
   </li>
 </ul>
   </li>
@@ -73,16 +115,37 @@
     <a class="nav-link" href="04-role-haproxy.html">4. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="04-role-haproxy.html#dockferfile">Ke</a>
+    <a class="nav-link" href="04-role-haproxy.html#init">Create ansible role skeleton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-role-haproxy.html#yum">Install HAProxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-role-haproxy.html#template">Create HAProxy template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-role-haproxy.html#copytemplate">Copy HAProxy template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-role-haproxy.html#firewall">Open haproxy service in Firewall</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-role-haproxy.html#service">Enable and start HAProxy</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="05-role-playbook.html">5. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
+    <a class="nav-link" href="05-playbook.html">5. Create a playbook to deploy the Web solution using the collection created</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="05-role-playbook.html#dockferfile">K</a>
+    <a class="nav-link" href="05-playbook.html#include">Create an ansible playbook to deploy mysql, httpd and haproxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="05-playbook.html#webcontent">Copy the content to the web servers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="05-playbook.html#test">Deploy the solution</a>
   </li>
 </ul>
   </li>
@@ -130,10 +193,23 @@
 <div class="paragraph">
 <p>In this exercise, you will create a role to deploy MySQL.</p>
 </div>
+<div class="paragraph">
+<p><strong>NOTE</strong>: All the tasks in this role needs to be executed as root. You can surround all the task in a block, and add become: true</p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- block:
+
+  - name: Install httpd packages
+    yum:
+
+  become: true</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="search"><a class="anchor" href="#search"></a>Create ansible role skeleton</h2>
+<h2 id="init"><a class="anchor" href="#init"></a>Create ansible role skeleton</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>1) Create an empty ansible role</strong></p>
@@ -149,23 +225,107 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="pull"><a class="anchor" href="#pull"></a>Add tasks to deploy MySQL</h2>
+<h2 id="yum"><a class="anchor" href="#yum"></a>Install mysql server</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>2) Pull the image from registry.access.redhat.com/rhscl/mysql-57-rhel7, and run the image. What error is displayed?</strong></p>
+<p><strong>2) Add a task to install mysqld package using the yum module</strong></p>
 </div>
 <div class="paragraph">
-<p>Pull the image with the command:</p>
+<p>Install the packages:</p>
 </div>
-<div class="listingblock">
+<div class="ulist">
+<ul>
+<li>
+<p>mysql-server</p>
+</li>
+<li>
+<p>python3-PyMySQL</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo podman pull  registry.access.redhat.com/rhscl/mysql-57-rhel7</code></pre>
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Install mysql-server and python3-PyMySQL packages
+    yum:
+      name: # Complete
+      state: # Complete</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="service"><a class="anchor" href="#service"></a>Start and enable mysqld service</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>3) Add a task to start and enable mysqld service using the service module</strong></p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Enable and start mysql service
+    service:
+      name: # Complete
+      enabled: # Complete
+      state: # Complete</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="firewall"><a class="anchor" href="#firewall"></a>Open MySQL service in Firewall</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>4) Add a task to Open MySQL service in Firewall </strong></p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Open MySQL service in Firewall
+    firewalld:
+      permanent: # Complete
+      state: # Complete
+      service: # Complete
+      immediate: # Complete</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mysqluser"><a class="anchor" href="#mysqluser"></a>Add the user to mysql</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>5) Add a task to add the user to MySQL </strong></p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Add user to MySQL
+    mysql_user:
+      name: # Complete
+      password: # Complete
+      host: "%"
+      priv: '*.*:ALL'
+      state: # Complete
+    no_log: true</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mysqldb"><a class="anchor" href="#mysqldb"></a>Add the database to mysql</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>6) Add a task to add the database to MySQL </strong></p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: create a new database
+    mysql_db:
+      name: # Complete
+      state: present</code></pre>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="01-setup.html">1. Setup</a></span>
+  <span class="prev"><a href="01-inventory.html">1. Create inventory and group_vars</a></span>
   <span class="next"><a href="03-role-httpd.html">3. Create an Ansible Role to deploy a Web Server</a></span>
 </nav>
 </article>

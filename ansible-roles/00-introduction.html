@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Deploying a HAProxy ansible role :: Creating Ansible Roles</title>
-    <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/04-role-haproxy.html">
-    <link rel="prev" href="03-role-httpd.html">
-    <link rel="next" href="05-playbook.html">
+    <title>Introduction :: Creating Ansible Roles</title>
+    <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/00-introduction.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="#00-setup.adoc#collections">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
 <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
@@ -41,7 +41,7 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="00-introduction.html">Introduction to Collections and Roles</a>
 <ul class="nav-list">
@@ -110,27 +110,27 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="04-role-haproxy.html">4. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#init">Create ansible role skeleton</a>
+    <a class="nav-link" href="04-role-haproxy.html#init">Create ansible role skeleton</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#yum">Install HAProxy</a>
+    <a class="nav-link" href="04-role-haproxy.html#yum">Install HAProxy</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#template">Create HAProxy template</a>
+    <a class="nav-link" href="04-role-haproxy.html#template">Create HAProxy template</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#copytemplate">Copy HAProxy template</a>
+    <a class="nav-link" href="04-role-haproxy.html#copytemplate">Copy HAProxy template</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#firewall">Open haproxy service in Firewall</a>
+    <a class="nav-link" href="04-role-haproxy.html#firewall">Open haproxy service in Firewall</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#service">Enable and start HAProxy</a>
+    <a class="nav-link" href="04-role-haproxy.html#service">Enable and start HAProxy</a>
   </li>
 </ul>
   </li>
@@ -180,180 +180,117 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Creating Ansible Roles</a></li>
-    <li><a href="04-role-haproxy.html">4. Create an Ansible Role to deploy a HAProxy Load Balancer</a></li>
+    <li><a href="00-introduction.html">Introduction to Collections and Roles</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/albertogd/rh-usal-ansible-roles-22/edit/master/documentation/modules/ROOT/pages/04-role-haproxy.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/albertogd/rh-usal-ansible-roles-22/edit/master/documentation/modules/ROOT/pages/00-introduction.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Deploying a HAProxy ansible role</h1>
-<div id="preamble">
+<h1 class="page">Introduction</h1>
+<div class="sect1 text-center strong">
+<h2 id="prerequisite"><a class="anchor" href="#prerequisite"></a>Introduction to Collections and Roles</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this exercise, you will create a role to deploy and configure HAProxy.</p>
+<p>Collections are a distribution format for Ansible content that can include playbooks, roles, modules, and plugins.</p>
 </div>
 <div class="paragraph">
-<p><strong>NOTE</strong>: All the tasks in this role needs to be executed as root. You can surround all the task in a block, and add become: true</p>
+<p>Roles let you automatically load related vars, files, tasks, handlers, and other Ansible artifacts based on a known file structure. After you group your content in roles, you can easily reuse them and share them with other users.</p>
 </div>
-<div class="listingblock lines_7">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- block:
-
-  - name: Install httpd packages
-    yum:
-
-  become: true</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="init"><a class="anchor" href="#init"></a>Create ansible role skeleton</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_creating_collections"><a class="anchor" href="#_creating_collections"></a>Creating collections</h3>
 <div class="paragraph">
-<p><strong>1) Create an empty ansible role</strong></p>
+<p>To create a collection:</p>
 </div>
-<div class="paragraph">
-<p>Run <strong>ansible-galaxy role init</strong> to create an empty role skeleton:</p>
-</div>
-<div class="listingblock lines_7">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init haproxy</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="yum"><a class="anchor" href="#yum"></a>Install HAProxy</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>2) Add a task to install the following packages using the yum module</strong></p>
-</div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>haproxy</p>
+<p>Create a collection skeleton with the collection init command.</p>
 </li>
 <li>
-<p>socat</p>
+<p>Add modules and other content to the collection.</p>
 </li>
-</ul>
+</ol>
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Install haproxy packages
-    yum:
-      name: # Complete
-      state: # Complete</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy collection init my_namespace.my_collection</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="template"><a class="anchor" href="#template"></a>Create HAProxy template</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_collection_directories_and_files"><a class="anchor" href="#_collection_directories_and_files"></a>Collection directories and files</h4>
 <div class="paragraph">
-<p><strong>3) Create the file haproxy.cfg.j2 in templates folder.</strong></p>
-</div>
-<div class="paragraph">
-<p>The template file should be like:</p>
+<p>A collection can contain these directories and files:</p>
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-conf hljs" data-lang="conf">global
-  daemon
-  group  haproxy
-  log  /dev/log local0
-  maxconn  10000
-  pidfile  /var/run/haproxy.pid
-  user  haproxy
-
-defaults
-  log  global
-  mode  http
-  retries  3
-  timeout  http-request 10s
-  timeout  queue 1m
-  timeout  connect 10s
-  timeout  client 1m
-  timeout  server 1m
-  timeout  check 10s
-
-frontend main
-    mode http
-    default_backend usal
-
-    # Complete
-    # bind *:80
-
-backend usal
-    balance roundrobin
-
-    # Complete
-    # server example1 10.0.0.1:80
-    # server example2 10.0.0.2:80</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">collection/
+├── docs/
+├── galaxy.yml
+├── meta/
+│   └── runtime.yml
+├── plugins/
+│   ├── modules/
+│   │   └── module1.py
+│   ├── inventory/
+│   └── .../
+├── README.md
+├── roles/
+│   ├── role1/
+│   ├── role2/
+│   └── .../
+├── playbooks/
+│   ├── files/
+│   ├── vars/
+│   ├── templates/
+│   └── tasks/
+└── tests/</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="copytemplate"><a class="anchor" href="#copytemplate"></a>Copy HAProxy template</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_creating_roles"><a class="anchor" href="#_creating_roles"></a>Creating roles</h3>
 <div class="paragraph">
-<p><strong>4) Add a task to copy HAProxy template.</strong></p>
+<p>Use the init command to initialize the base structure of a new role:</p>
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Configure haproxy
-    template:
-      src: # Complete
-      dest: /etc/haproxy/haproxy.cfg
-      owner: root
-      group: root
-      mode: 0644</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init role_name</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="firewall"><a class="anchor" href="#firewall"></a>Open haproxy service in Firewall</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_role_directories_and_files"><a class="anchor" href="#_role_directories_and_files"></a>Role directories and files</h4>
 <div class="paragraph">
-<p><strong>5) Add a task to Open HAProxy (http) service in Firewall </strong></p>
+<p>A role can contain these directories and files:</p>
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Open HAProxy service in Firewall
-    firewalld:
-      permanent: # Complete
-      state: # Complete
-      service: # Complete
-      immediate: # Complete</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">role_name/
+    README.md
+    .travis.yml
+    defaults/
+        main.yml
+    files/
+    handlers/
+        main.yml
+    meta/
+        main.yml
+    templates/
+    tests/
+        inventory
+        test.yml
+    vars/
+        main.yml</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="service"><a class="anchor" href="#service"></a>Enable and start HAProxy</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>6) Add a task to enable and start HAProxy</strong></p>
-</div>
-<div class="listingblock lines_7">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Enable and start haproxy
-    service:
-      name: # Complete
-      enabled: # Complete
-      state: # Complete</code></pre>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="03-role-httpd.html">3. Create an Ansible Role to deploy a Web Server</a></span>
-  <span class="next"><a href="05-playbook.html">5. Create a playbook to deploy the Web solution using the collection created</a></span>
+  <span class="prev"><a href="index.html">Creating Ansible Roles</a></span>
+  <span class="next"><a href="#00-setup.adoc#collections">Collections</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

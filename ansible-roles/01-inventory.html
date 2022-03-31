@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Deploying a HAProxy ansible role :: Creating Ansible Roles</title>
-    <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/04-role-haproxy.html">
-    <link rel="prev" href="03-role-httpd.html">
-    <link rel="next" href="05-playbook.html">
+    <title>Create inventory and group_vars :: Creating Ansible Roles</title>
+    <link rel="canonical" href="https://albertogd.github.io/rh-usal-ansible-roles-22/ansible-roles/index.html/ansible-roles/01-inventory.html">
+    <link rel="prev" href="#00-setup.adoc#roles">
+    <link rel="next" href="02-role-mysql.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
 <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
@@ -53,15 +53,15 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="01-inventory.html">1. Create inventory and group_vars</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-inventory.html#inventory">Create the inventory</a>
+    <a class="nav-link" href="#inventory">Create the inventory</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-inventory.html#vars">Create the group_vars</a>
+    <a class="nav-link" href="#vars">Create the group_vars</a>
   </li>
 </ul>
   </li>
@@ -110,27 +110,27 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="04-role-haproxy.html">4. Create an Ansible Role to deploy a HAProxy Load Balancer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#init">Create ansible role skeleton</a>
+    <a class="nav-link" href="04-role-haproxy.html#init">Create ansible role skeleton</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#yum">Install HAProxy</a>
+    <a class="nav-link" href="04-role-haproxy.html#yum">Install HAProxy</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#template">Create HAProxy template</a>
+    <a class="nav-link" href="04-role-haproxy.html#template">Create HAProxy template</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#copytemplate">Copy HAProxy template</a>
+    <a class="nav-link" href="04-role-haproxy.html#copytemplate">Copy HAProxy template</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#firewall">Open haproxy service in Firewall</a>
+    <a class="nav-link" href="04-role-haproxy.html#firewall">Open haproxy service in Firewall</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#service">Enable and start HAProxy</a>
+    <a class="nav-link" href="04-role-haproxy.html#service">Enable and start HAProxy</a>
   </li>
 </ul>
   </li>
@@ -180,180 +180,113 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Creating Ansible Roles</a></li>
-    <li><a href="04-role-haproxy.html">4. Create an Ansible Role to deploy a HAProxy Load Balancer</a></li>
+    <li><a href="01-inventory.html">1. Create inventory and group_vars</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/albertogd/rh-usal-ansible-roles-22/edit/master/documentation/modules/ROOT/pages/04-role-haproxy.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/albertogd/rh-usal-ansible-roles-22/edit/master/documentation/modules/ROOT/pages/01-inventory.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Deploying a HAProxy ansible role</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>In this exercise, you will create a role to deploy and configure HAProxy.</p>
-</div>
-<div class="paragraph">
-<p><strong>NOTE</strong>: All the tasks in this role needs to be executed as root. You can surround all the task in a block, and add become: true</p>
-</div>
-<div class="listingblock lines_7">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- block:
-
-  - name: Install httpd packages
-    yum:
-
-  become: true</code></pre>
-</div>
-</div>
-</div>
-</div>
+<h1 class="page">Create inventory and group_vars</h1>
 <div class="sect1">
-<h2 id="init"><a class="anchor" href="#init"></a>Create ansible role skeleton</h2>
+<h2 id="inventory"><a class="anchor" href="#inventory"></a>Create the inventory</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>1) Create an empty ansible role</strong></p>
+<p><strong>1) Create an inventory file named inventory with the hosts and groups</strong></p>
 </div>
 <div class="paragraph">
-<p>Run <strong>ansible-galaxy role init</strong> to create an empty role skeleton:</p>
-</div>
-<div class="listingblock lines_7">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ansible-galaxy role init haproxy</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="yum"><a class="anchor" href="#yum"></a>Install HAProxy</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>2) Add a task to install the following packages using the yum module</strong></p>
+<p>Add the variable ansible_user=devops in all the hosts. You can add it in the inventory or in group_vars.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>haproxy</p>
+<p>mysql</p>
+<div class="ulist">
+<ul>
+<li>
+<p>servera.lab.example.com</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>socat</p>
+<p>webserver</p>
+<div class="ulist">
+<ul>
+<li>
+<p>serverb.lab.example.com</p>
+</li>
+<li>
+<p>serverc.lab.example.com</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>haproxy</p>
+<div class="ulist">
+<ul>
+<li>
+<p>serverd.lab.example.com</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Install haproxy packages
-    yum:
-      name: # Complete
-      state: # Complete</code></pre>
+<pre class="highlightjs highlight"><code class="language-ini hljs" data-lang="ini">[mysql]
+db ansible_host=servera.lab.example.com ansible_user=devops
+
+[webserver]
+web1 ansible_host=serverb.lab.example.com ansible_user=devops
+...</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="template"><a class="anchor" href="#template"></a>Create HAProxy template</h2>
+<h2 id="vars"><a class="anchor" href="#vars"></a>Create group vars</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>3) Create the file haproxy.cfg.j2 in templates folder.</strong></p>
+<p><strong>2) Create some MySQL group vars we&#8217;ll need to use:</strong></p>
 </div>
 <div class="paragraph">
-<p>The template file should be like:</p>
+<p>Create a folder named group_vars in your working folder, and inside group_vars, create another folder named all.
+Inside this folder, create a file named database.yml with the following variables:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>mysql_user: usal</p>
+</li>
+<li>
+<p>mysql_password: usal2022</p>
+</li>
+<li>
+<p>mysql_database: employees</p>
+</li>
+<li>
+<p>mysql_table: employee</p>
+</li>
+</ul>
 </div>
 <div class="listingblock lines_7">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-conf hljs" data-lang="conf">global
-  daemon
-  group  haproxy
-  log  /dev/log local0
-  maxconn  10000
-  pidfile  /var/run/haproxy.pid
-  user  haproxy
-
-defaults
-  log  global
-  mode  http
-  retries  3
-  timeout  http-request 10s
-  timeout  queue 1m
-  timeout  connect 10s
-  timeout  client 1m
-  timeout  server 1m
-  timeout  check 10s
-
-frontend main
-    mode http
-    default_backend usal
-
-    # Complete
-    # bind *:80
-
-backend usal
-    balance roundrobin
-
-    # Complete
-    # server example1 10.0.0.1:80
-    # server example2 10.0.0.2:80</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="copytemplate"><a class="anchor" href="#copytemplate"></a>Copy HAProxy template</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>4) Add a task to copy HAProxy template.</strong></p>
-</div>
-<div class="listingblock lines_7">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Configure haproxy
-    template:
-      src: # Complete
-      dest: /etc/haproxy/haproxy.cfg
-      owner: root
-      group: root
-      mode: 0644</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="firewall"><a class="anchor" href="#firewall"></a>Open haproxy service in Firewall</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>5) Add a task to Open HAProxy (http) service in Firewall </strong></p>
-</div>
-<div class="listingblock lines_7">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Open HAProxy service in Firewall
-    firewalld:
-      permanent: # Complete
-      state: # Complete
-      service: # Complete
-      immediate: # Complete</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="service"><a class="anchor" href="#service"></a>Enable and start HAProxy</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>6) Add a task to enable and start HAProxy</strong></p>
-</div>
-<div class="listingblock lines_7">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">  - name: Enable and start haproxy
-    service:
-      name: # Complete
-      enabled: # Complete
-      state: # Complete</code></pre>
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">group_vars/all/database.yml
+---
+mysql_user: usal
+mysql_password: usal2022
+mysql_database: employees
+mysql_table: employee</code></pre>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="03-role-httpd.html">3. Create an Ansible Role to deploy a Web Server</a></span>
-  <span class="next"><a href="05-playbook.html">5. Create a playbook to deploy the Web solution using the collection created</a></span>
+  <span class="prev"><a href="#00-setup.adoc#roles">Roles</a></span>
+  <span class="next"><a href="02-role-mysql.html">2. Create an Ansible Role to deploy a MySQL database</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
