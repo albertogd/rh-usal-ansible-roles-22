@@ -3,12 +3,11 @@
 
   - name: Install httpd packages
     yum:
-      name: "{{ item }}"
+      name:
+        - httpd
+        - php
+        - php-mysqlnd
       state: present
-    loop:
-      - httpd
-      - php
-      - php-mysqlnd
 
   - name: Open http service in Firewall 
     firewalld:
