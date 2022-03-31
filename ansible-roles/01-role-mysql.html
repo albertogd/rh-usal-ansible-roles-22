@@ -185,7 +185,22 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this exercise, you will create a role to deploy MySQL. All the tasks in this role needs to be executed as root.</p>
+<p>In this exercise, you will create a role to deploy MySQL.</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE</strong>: All the tasks in this role needs to be executed as root. You can surround all the task in a block, and add become: true</p>
+</div>
+<div class="listingblock lines_7">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">tasks:
+
+- block:
+
+  - name: Install httpd packages
+    yum:
+
+  become: true</code></pre>
+</div>
 </div>
 </div>
 </div>
