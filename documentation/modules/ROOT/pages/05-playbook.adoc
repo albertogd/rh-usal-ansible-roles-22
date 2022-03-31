@@ -60,23 +60,6 @@ Add a variable named mysql with the value "CREATE TABLE IF NOT EXISTS employee (
           when: # Complete - this task should run only in webserver hosts group
 ----
 
-[#inventory]
-== Create an inventory
-
-**3) Create an inventory file named inventory with the hosts and groups**
-
-Add the variable ansible_user=devops in all the hosts. You can add it in the inventory or in group_vars.
-
-* mysql
-** servera.lab.example.com
-
-* webserver
-** serverb.lab.example.com
-** serverc.lab.example.com
-
-* haproxy
-** serverd.lab.example.com
-
 [#test]
 == Deploy the solution
 

@@ -7,8 +7,6 @@ In this exercise, you will create a role to deploy and configure HAProxy.
 [.lines_7]
 [source,yaml,subs="+macros,+attributes"]
 ----
-tasks:
-
 - block:
 
   - name: Install httpd packages

@@ -13,26 +13,32 @@ A playbook including the roles and a task to copy the web content (2 php files),
 
 image::Red_Hat_Academy_USAL_Collections_and_Roles.png[]
 
-=== 1. Create an Ansible Role to deploy a MySQL database
+=== 1. Create inventory and group_vars
+
+Create an asnible inventory with the hosts and groups, and the group_vars we'll use.
+
+xref:01-inventory.adoc[Start]
+
+=== 2. Create an Ansible Role to deploy a MySQL database
 
 Create an asnible role named **mysql** to deploy a MYSQL server.
 
-xref:01-role-mysql.adoc[Start]
+xref:02-role-mysql.adoc[Start]
 
-=== 2. Create an Ansible Role to deploy a Web Server
+=== 3. Create an Ansible Role to deploy a Web Server
 
 Create an asnible role named **httpd**  to deploy web servers.
 
-xref:02-role-httpd.adoc[Start]
+xref:03-role-httpd.adoc[Start]
 
-=== 3. Create an Ansible Role to deploy a HAProxy Load Balancer
+=== 4. Create an Ansible Role to deploy a HAProxy Load Balancer
 
 Create an asnible role named **haproxy** to deploy an HAProxy to load balance the requests to the web servers.
 
-xref:03-role-haproxy.adoc[Start]
+xref:04-role-haproxy.adoc[Start]
 
-=== 4. Create a playbook to deploy the Web Solution using the roles created
+=== 5. Create a playbook to deploy the Web Solution using the roles created
 
 Create a playbook to use the 3 roles created. Add a task to copy the web content (2 php files). Run the playbook and test the solution.
 
-xref:04-playbook.adoc[Start]
+xref:05-playbook.adoc[Start]

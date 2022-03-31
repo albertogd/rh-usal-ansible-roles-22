@@ -1,0 +1,53 @@
+= Create inventory and group_vars
+
+[#inventory]
+== Create the inventory
+
+**1) Create an inventory file named inventory with the hosts and groups**
+
+Add the variable ansible_user=devops in all the hosts. You can add it in the inventory or in group_vars.
+
+* mysql
+** servera.lab.example.com
+
+* webserver
+** serverb.lab.example.com
+** serverc.lab.example.com
+
+* haproxy
+** serverd.lab.example.com
+
+[.lines_7]
+[source,ini,subs="+macros,+attributes"]
+----
+[mysql]
+db ansible_host=servera.lab.example.com ansible_user=devops
+
+[webserver]
+web1 ansible_host=serverb.lab.example.com ansible_user=devops
+...
+----
+
+[#vars]
+== Create group vars
+
+**2) Create some MySQL group vars we'll need to use:**
+
+Create a folder named group_vars in your working folder, and inside group_vars, create another folder named all.
+Inside this folder, create a file named database.yml with the following variables:
+
+- mysql_user: usal
+- mysql_password: usal2022
+- mysql_database: employees
+- mysql_table: employee
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+group_vars/all/database.yml
+---
+mysql_user: usal
+mysql_password: usal2022
+mysql_database: employees
+mysql_table: employee
+----
