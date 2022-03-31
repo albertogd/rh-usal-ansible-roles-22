@@ -1,6 +1,21 @@
 = Deploying a MySQL ansible role
 
-In this exercise, you will create a role to deploy MySQL. All the tasks in this role needs to be executed as root.
+In this exercise, you will create a role to deploy MySQL.
+
+**NOTE**: All the tasks in this role needs to be executed as root. You can surround all the task in a block, and add become: true
+
+[.lines_7]
+[source,yaml,subs="+macros,+attributes"]
+----
+tasks:
+
+- block:
+
+  - name: Install httpd packages
+    yum:
+
+  become: true
+----
 
 [#init]
 == Create ansible role skeleton
